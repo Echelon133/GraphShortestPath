@@ -8,6 +8,7 @@ public interface Graph<T extends Number & Comparable<T>> {
 
     void addVertex(Vertex<T> v);
     void removeVertex(Vertex<T> v);
-    void addEdge(Vertex<T> source, Vertex<T> destination, T weight);
+    void addEdge(Edge<T> e);
+    void addEdge(Vertex<T> source, Vertex<T> destination, T weight) throws IllegalArgumentException;
     void removeEdge(Edge<T> e);
 }
