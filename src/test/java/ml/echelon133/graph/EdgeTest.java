@@ -109,4 +109,16 @@ public class EdgeTest {
         assertEquals(e2ExpectedWeight, e2.getWeightAsBigDecimal());
     }
 
+    @Test
+    public void getWeightAsBigDecimalConvertsEdgesWithWeightOfTypeFloat() {
+        Edge<Float> e1 = new Edge<>(null, null, Float.MAX_VALUE);
+        Edge<Float> e2 = new Edge<>(null, null, 0.0f);
+
+        BigDecimal e1ExpectedWeight = new BigDecimal(0x1.fffffeP+127f);
+        BigDecimal e2ExpectedWeight = new BigDecimal(0);
+
+        assertEquals(e1ExpectedWeight, e1.getWeightAsBigDecimal());
+        assertEquals(e2ExpectedWeight, e2.getWeightAsBigDecimal());
+    }
+
 }
