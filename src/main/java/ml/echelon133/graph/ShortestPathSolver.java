@@ -1,5 +1,6 @@
 package ml.echelon133.graph;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class ShortestPathSolver<T extends Number & Comparable<T>> {
@@ -10,8 +11,8 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
         public int compare(Vertex<T> o1, Vertex<T> o2) {
             // Comparator needs to always sort Vertex<T> elements in the PriorityQueue
             // based on their sumOfWeights that is stored in VertexResult (value of resultMap)
-            T o1SumOfWeights = resultMap.get(o1).getSumOfWeights();
-            T o2SumOfWeights = resultMap.get(o2).getSumOfWeights();
+            BigDecimal o1SumOfWeights = resultMap.get(o1).getSumOfWeights();
+            BigDecimal o2SumOfWeights = resultMap.get(o2).getSumOfWeights();
             return o1SumOfWeights.compareTo(o2SumOfWeights);
         }
     }
