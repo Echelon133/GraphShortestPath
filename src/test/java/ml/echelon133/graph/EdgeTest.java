@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -74,6 +75,20 @@ public class EdgeTest {
         Edge<Long> e2 = new Edge<>(null, null, 0L);
 
         BigDecimal e1ExpectedWeight = new BigDecimal(0x7fffffffffffffffL);
+        BigDecimal e2ExpectedWeight = new BigDecimal(0);
+
+        assertEquals(e1ExpectedWeight, e1.getWeightAsBigDecimal());
+        assertEquals(e2ExpectedWeight, e2.getWeightAsBigDecimal());
+    }
+
+    @Test
+    public void getWeightAsBigDecimalConvertsEdgesWithWeightOfTypeBigInteger() {
+        BigInteger bigTestValue = new BigInteger("1267650600228229401496703205376"); // 2^100
+
+        Edge<BigInteger> e1 = new Edge<>(null, null, bigTestValue);
+        Edge<BigInteger> e2 = new Edge<>(null, null, new BigInteger("0"));
+
+        BigDecimal e1ExpectedWeight = new BigDecimal(bigTestValue);
         BigDecimal e2ExpectedWeight = new BigDecimal(0);
 
         assertEquals(e1ExpectedWeight, e1.getWeightAsBigDecimal());
