@@ -1,9 +1,11 @@
 package ml.echelon133.graph;
 
+import java.math.BigDecimal;
+
 public class VertexResult<T extends Number & Comparable<T>> {
     private Vertex<T> sourceVertex;
     private Vertex<T> previousVertex;
-    private T sumOfWeights;
+    private BigDecimal sumOfWeights;
 
     public VertexResult(Vertex<T> sourceVertex) {
         this.sourceVertex = sourceVertex;
@@ -28,11 +30,11 @@ public class VertexResult<T extends Number & Comparable<T>> {
         this.previousVertex = previousVertex;
     }
 
-    public T getSumOfWeights() {
+    public BigDecimal getSumOfWeights() {
         return sumOfWeights;
     }
 
-    public void setSumOfWeights(T sumOfWeights) {
+    public void setSumOfWeights(BigDecimal sumOfWeights) {
         this.sumOfWeights = sumOfWeights;
     }
 }
