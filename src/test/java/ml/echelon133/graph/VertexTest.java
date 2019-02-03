@@ -3,6 +3,8 @@ package ml.echelon133.graph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -50,7 +52,7 @@ public class VertexTest {
         testVertex.addEdge(newVertex, 50);
         testVertex.addEdge(newVertex, 15);
 
-        Integer weight = testVertex.getWeightTo(newVertex);
+        BigDecimal weight = testVertex.getWeightTo(newVertex);
         assertEquals(7, weight.intValue());
     }
 
