@@ -3,6 +3,8 @@ package ml.echelon133.graph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EdgeTest {
@@ -28,5 +30,17 @@ public class EdgeTest {
         }
 
         assertEquals(expectedMessage, receivedMessage);
+    }
+
+    @Test
+    public void getWeightAsBigDecimalConvertsEdgesWithWeightOfTypeByte() {
+        Edge<Byte> e1 = new Edge<>(null, null, Byte.MAX_VALUE);
+        Edge<Byte> e2 = new Edge<>(null, null, (byte)0);
+
+        BigDecimal e1ExpectedWeight = new BigDecimal(127);
+        BigDecimal e2ExpectedWeight = new BigDecimal(0);
+
+        assertEquals(e1ExpectedWeight, e1.getWeightAsBigDecimal());
+        assertEquals(e2ExpectedWeight, e2.getWeightAsBigDecimal());
     }
 }
