@@ -1,6 +1,9 @@
 package ml.echelon133.graph;
 
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public class Edge<T extends Number & Comparable<T>> {
     private Vertex<T> source;
     private Vertex<T> destination;
@@ -28,5 +31,23 @@ public class Edge<T extends Number & Comparable<T>> {
 
     public T getWeight() {
         return weight;
+    }
+
+    public BigDecimal getWeightAsBigDecimal() {
+        BigDecimal retWeight;
+
+        if (weight instanceof Float) {
+            retWeight = new BigDecimal(weight.floatValue());
+        } else if (weight instanceof Double) {
+            retWeight = new BigDecimal(weight.doubleValue());
+        } else if (weight instanceof BigDecimal) {
+            retWeight = (BigDecimal)weight;
+        } else if (weight instanceof BigInteger) {
+            retWeight = new BigDecimal((BigInteger)weight);
+        } else {
+            // take byte/short/int/long values as long, because there is no precision there
+            retWeight = new BigDecimal(weight.longValue());
+        }
+        return retWeight;
     }
 }
