@@ -1,5 +1,6 @@
 package ml.echelon133.graph;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class Vertex<T extends Number & Comparable<T>> {
         return edges;
     }
 
-    public T getWeightTo(Vertex<T> dest) throws IllegalArgumentException {
+    public BigDecimal getWeightTo(Vertex<T> dest) throws IllegalArgumentException {
         // find edge from this vertex to dest vertex with lowest weight
         Optional<Edge<T>> lowestWeightEdge = edges
                 .stream()
@@ -31,7 +32,7 @@ public class Vertex<T extends Number & Comparable<T>> {
                 .min(Comparator.comparing(Edge<T>::getWeight));
 
         if (lowestWeightEdge.isPresent()) {
-            return lowestWeightEdge.get().getWeight();
+            return lowestWeightEdge.get().getWeightAsBigDecimal();
         } else {
             String msg = String.format("There is no edge between %s and %s vertexes", this.getName(), dest.getName());
             throw new IllegalArgumentException(msg);
