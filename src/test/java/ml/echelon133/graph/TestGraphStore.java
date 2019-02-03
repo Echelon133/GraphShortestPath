@@ -26,7 +26,7 @@ public class TestGraphStore {
         graph.addEdge(v4, v5, (byte)12);
         graph.addEdge(v5, v2, (byte)9);
         graph.addEdge(v5, v3, (byte)6);
-        graph.addEdge(v1, v2, (byte)255);
+        graph.addEdge(v1, v2, (byte)127);
         graph.addEdge(v2, v4, (byte)33);
 
         return graph;
