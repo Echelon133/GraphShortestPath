@@ -114,4 +114,52 @@ public class ShortestPathSolverTest {
             }
         }
     }
+
+    @Test
+    public void intGraphShortestPathTest() {
+        Graph<Integer> intGraph = TestGraphStore.getIntegerTestGraph();
+        ShortestPathSolver<Integer> sps = new ShortestPathSolver<>(intGraph);
+
+        Vertex<Integer> startVertex = intGraph
+                .getVertexes().stream().filter(v -> v.getName().equals("intVertex1")).findFirst().get();
+
+        Map<Vertex<Integer>, VertexResult<Integer>> resultMap = sps.solveStartingFrom(startVertex);
+
+        for (Map.Entry<Vertex<Integer>, VertexResult<Integer>> entry : resultMap.entrySet()) {
+
+            Vertex<Integer> testedVertex = entry.getKey();
+            VertexResult<Integer> testedVertexResult = entry.getValue();
+
+            // Expected values are written in a comment of TestGraphStore.getIntegerTestGraph() method
+            switch (testedVertex.getName()) {
+                case "intVertex1":
+                    assertNull(testedVertexResult.getPreviousVertex());
+                    assertEquals(new BigDecimal("0"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "intVertex2":
+                    assertEquals("intVertex5", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("2147485677"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "intVertex3":
+                    assertEquals("intVertex1", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("1000"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "intVertex4":
+                    assertEquals("intVertex3", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("1200"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "intVertex5":
+                    assertEquals("intVertex6", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("2147485647"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "intVertex6":
+                    assertEquals("intVertex3", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("2000"), testedVertexResult.getSumOfWeights());
+                    break;
+                default:
+                    fail("Unexpected vertex in the tested graph");
+                    break;
+            }
+        }
+    }
 }
