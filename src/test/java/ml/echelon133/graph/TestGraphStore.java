@@ -257,7 +257,42 @@ public class TestGraphStore {
         return graph;
     }
 
+    /*
+        If we start from bigDecVertex1, expected solution is:
+
+        bigDecVertex1 | Prev vertex: ---           | sumOfWeights to bigDecVertex1: 0
+        bigDecVertex2 | Prev vertex: bigDecVertex1 | sumOfWeights to bigDecVertex2: 0.000001
+        bigDecVertex3 | Prev vertex: bigDecVertex7 | sumOfWeights to bigDecVertex3: 0.00000010001001
+        bigDecVertex4 | Prev vertex: bigDecVertex2 | sumOfWeights to bigDecVertex4: 0.000001001
+        bigDecVertex5 | Prev vertex: bigDecVertex1 | sumOfWeights to bigDecVertex5: 0.0000001
+        bigDecVertex6 | Prev vertex: bigDecVertex3 | sumOfWeights to bigDecVertex6: 0.0000001000100100001
+        bigDecVertex7 | Prev vertex: bigDecVertex5 | sumOfWeights to bigDecVertex7: 0.00000010001
+
+         */
     public static Graph<BigDecimal> getBigDecimalTestGraph() {
-        return new WeightedGraph<>();
+        Graph<BigDecimal> graph = new WeightedGraph<>();
+
+        Vertex<BigDecimal> v1 = new Vertex<>("bigDecVertex1");
+        Vertex<BigDecimal> v2 = new Vertex<>("bigDecVertex2");
+        Vertex<BigDecimal> v3 = new Vertex<>("bigDecVertex3");
+        Vertex<BigDecimal> v4 = new Vertex<>("bigDecVertex4");
+        Vertex<BigDecimal> v5 = new Vertex<>("bigDecVertex5");
+        Vertex<BigDecimal> v6 = new Vertex<>("bigDecVertex6");
+        Vertex<BigDecimal> v7 = new Vertex<>("bigDecVertex7");
+
+        List<Vertex<BigDecimal>> allVertexes = List.of(v1, v2, v3, v4, v5, v6, v7);
+        allVertexes.forEach(graph::addVertex);
+
+        graph.addEdge(v1, v2, new BigDecimal("0.000001"));
+        graph.addEdge(v2, v4, new BigDecimal("0.000000001"));
+        graph.addEdge(v4, v3, new BigDecimal("0.00000000001"));
+        graph.addEdge(v3, v6, new BigDecimal("0.0000000000000000001"));
+        graph.addEdge(v6, v7, new BigDecimal("0.000000000000000000000001"));
+        graph.addEdge(v7, v3, new BigDecimal("0.00000000000001"));
+        graph.addEdge(v1, v3, new BigDecimal("0.000002"));
+        graph.addEdge(v1, v5, new BigDecimal("0.0000001"));
+        graph.addEdge(v5, v7, new BigDecimal("0.00000000001"));
+
+        return graph;
     }
 }
