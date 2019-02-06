@@ -150,8 +150,40 @@ public class TestGraphStore {
         return graph;
     }
 
+    /*
+        If we start from floatVertex1, expected solution is:
+
+        floatVertex1 | Prev vertex: ---          | sumOfWeights to floatVertex1: 0
+        floatVertex2 | Prev vertex: floatVertex1 | sumOfWeights to floatVertex2: 13.856
+        floatVertex3 | Prev vertex: floatVertex1 | sumOfWeights to floatVertex3: 13.855
+        floatVertex4 | Prev vertex: floatVertex2 | sumOfWeights to floatVertex4: 7820.389186
+        floatVertex5 | Prev vertex: floatVertex3 | sumOfWeights to floatVertex5: 13.856
+        floatVertex6 | Prev vertex: floatVertex3 | sumOfWeights to floatVertex6: 14.39179
+
+         */
     public static Graph<Float> getFloatTestGraph() {
-        return new WeightedGraph<>();
+        Graph<Float> graph = new WeightedGraph<>();
+
+        Vertex<Float> v1 = new Vertex<>("floatVertex1");
+        Vertex<Float> v2 = new Vertex<>("floatVertex2");
+        Vertex<Float> v3 = new Vertex<>("floatVertex3");
+        Vertex<Float> v4 = new Vertex<>("floatVertex4");
+        Vertex<Float> v5 = new Vertex<>("floatVertex5");
+        Vertex<Float> v6 = new Vertex<>("floatVertex6");
+
+        List<Vertex<Float>> allVertexes = List.of(v1, v2, v3, v4, v5, v6);
+        allVertexes.forEach(graph::addVertex);
+
+        graph.addEdge(v1, v3, 13.855f);
+        graph.addEdge(v1, v2, 13.856f);
+        graph.addEdge(v3, v5, 0.001f);
+        graph.addEdge(v5, v6, 0.5368f);
+        graph.addEdge(v3, v6, 0.53679f);
+        graph.addEdge(v2, v4, 7806.53320f);
+        graph.addEdge(v2, v4, 7806.533201f);
+        graph.addEdge(v2, v4, 7806.533186f);
+
+        return graph;
     }
 
     public static Graph<Double> getDoubleTestGraph() {
