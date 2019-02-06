@@ -113,8 +113,41 @@ public class TestGraphStore {
         return graph;
     }
 
+    /*
+        If we start from longVertex1, expected solution is:
+
+        longVertex1 | Prev vertex: ---         | sumOfWeights to longVertex1: 0
+        longVertex2 | Prev vertex: longVertex1 | sumOfWeights to longVertex2: 9223372036854775807
+        longVertex3 | Prev vertex: longVertex2 | sumOfWeights to longVertex3: 18446744073709551614
+        longVertex4 | Prev vertex: longVertex2 | sumOfWeights to longVertex4: 9223372036854776110
+        longVertex5 | Prev vertex: longVertex4 | sumOfWeights to longVertex5: 9223372036854781110
+        longVertex6 | Prev vertex: longVertex4 | sumOfWeights to longVertex6: 9223372036854776410
+
+         */
     public static Graph<Long> getLongTestGraph() {
-        return new WeightedGraph<>();
+        Graph<Long> graph = new WeightedGraph<>();
+
+        Vertex<Long> v1 = new Vertex<>("longVertex1");
+        Vertex<Long> v2 = new Vertex<>("longVertex2");
+        Vertex<Long> v3 = new Vertex<>("longVertex3");
+        Vertex<Long> v4 = new Vertex<>("longVertex4");
+        Vertex<Long> v5 = new Vertex<>("longVertex5");
+        Vertex<Long> v6 = new Vertex<>("longVertex6");
+
+        List<Vertex<Long>> allVertexes = List.of(v1, v2, v3, v4, v5, v6);
+        allVertexes.forEach(graph::addVertex);
+
+        graph.addEdge(v1, v2, Long.MAX_VALUE);
+        graph.addEdge(v2, v3, Long.MAX_VALUE);
+        graph.addEdge(v3, v4, 1000L);
+        graph.addEdge(v4, v2, 80L);
+        graph.addEdge(v2, v4, 303L);
+        graph.addEdge(v4, v5, 5000L);
+        graph.addEdge(v5, v6, 3L);
+        graph.addEdge(v4, v6, 5005L);
+        graph.addEdge(v4, v6, 300L);
+
+        return graph;
     }
 
     public static Graph<Float> getFloatTestGraph() {
