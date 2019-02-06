@@ -186,8 +186,41 @@ public class TestGraphStore {
         return graph;
     }
 
+
+    /*
+        If we start from doubleVertex1, expected solution is:
+
+        doubleVertex1 | Prev vertex: ---           | sumOfWeights to doubleVertex1: 0
+        doubleVertex2 | Prev vertex: doubleVertex4 | sumOfWeights to doubleVertex2: 1008.667
+        doubleVertex3 | Prev vertex: doubleVertex1 | sumOfWeights to doubleVertex3: 1.8776
+        doubleVertex4 | Prev vertex: doubleVertex5 | sumOfWeights to doubleVertex4: 1008.666
+        doubleVertex5 | Prev vertex: doubleVertex1 | sumOfWeights to doubleVertex5: 7.1
+
+         */
     public static Graph<Double> getDoubleTestGraph() {
-        return new WeightedGraph<>();
+        Graph<Double> graph = new WeightedGraph<>();
+
+        Vertex<Double> v1 = new Vertex<>("doubleVertex1");
+        Vertex<Double> v2 = new Vertex<>("doubleVertex2");
+        Vertex<Double> v3 = new Vertex<>("doubleVertex3");
+        Vertex<Double> v4 = new Vertex<>("doubleVertex4");
+        Vertex<Double> v5 = new Vertex<>("doubleVertex5");
+
+        List<Vertex<Double>> allVertexes = List.of(v1, v2, v3, v4, v5);
+        allVertexes.forEach(graph::addVertex);
+
+        graph.addEdge(v1, v2, 1100.5);
+        graph.addEdge(v2, v1, 0.0001);
+        graph.addEdge(v1, v3, 1.8776);
+        graph.addEdge(v3, v5, 5.7986);
+        graph.addEdge(v5, v4, 1001.566);
+        graph.addEdge(v4, v5, 1000000.11);
+        graph.addEdge(v1, v5, 7.1);
+        graph.addEdge(v4, v2, 0.001);
+        graph.addEdge(v4, v3, 23.999);
+        graph.addEdge(v2, v4, 93.2);
+
+        return graph;
     }
 
     public static Graph<BigInteger> getBigIntegerTestGraph() {
