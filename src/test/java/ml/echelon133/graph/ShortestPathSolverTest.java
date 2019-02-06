@@ -211,7 +211,6 @@ public class ShortestPathSolverTest {
         }
     }
 
-
     @Test
     public void floatGraphShortestPathTest() {
         Graph<Float> floatGraph = TestGraphStore.getFloatTestGraph();
@@ -255,6 +254,53 @@ public class ShortestPathSolverTest {
                 case "floatVertex6":
                     assertEquals("floatVertex3", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("14.39179").floatValue(), vertexSumOfWeights, 0.00001f);
+                    break;
+                default:
+                    fail("Unexpected vertex in the tested graph");
+                    break;
+            }
+        }
+    }
+
+    @Test
+    public void doubleGraphShortestPathTest() {
+        Graph<Double> doubleGraph = TestGraphStore.getDoubleTestGraph();
+        ShortestPathSolver<Double> sps = new ShortestPathSolver<>(doubleGraph);
+
+        Vertex<Double> startVertex = doubleGraph
+                .getVertexes().stream().filter(v -> v.getName().equals("doubleVertex1")).findFirst().get();
+
+        Map<Vertex<Double>, VertexResult<Double>> resultMap = sps.solveStartingFrom(startVertex);
+
+        for (Map.Entry<Vertex<Double>, VertexResult<Double>> entry : resultMap.entrySet()) {
+
+            Vertex<Double> testedVertex = entry.getKey();
+            VertexResult<Double> testedVertexResult = entry.getValue();
+
+            // needed for comparing doubles with delta
+            double vertexSumOfWeights = testedVertexResult.getSumOfWeights().doubleValue();
+
+            // Expected values are written in a comment of TestGraphStore.getDoubleTestGraph() method
+            switch (testedVertex.getName()) {
+                case "doubleVertex1":
+                    assertNull(testedVertexResult.getPreviousVertex());
+                    assertEquals(new BigDecimal("0").doubleValue(), vertexSumOfWeights, 0.00001);
+                    break;
+                case "doubleVertex2":
+                    assertEquals("doubleVertex4", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("1008.667").doubleValue(), vertexSumOfWeights, 0.00001);
+                    break;
+                case "doubleVertex3":
+                    assertEquals("doubleVertex1", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("1.8776").doubleValue(), vertexSumOfWeights, 0.00001);
+                    break;
+                case "doubleVertex4":
+                    assertEquals("doubleVertex5", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("1008.666").doubleValue(), vertexSumOfWeights, 0.00001);
+                    break;
+                case "doubleVertex5":
+                    assertEquals("doubleVertex1", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("7.1").doubleValue(), vertexSumOfWeights, 0.00001);
                     break;
                 default:
                     fail("Unexpected vertex in the tested graph");
