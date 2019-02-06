@@ -223,8 +223,38 @@ public class TestGraphStore {
         return graph;
     }
 
+    /*
+        If we start from bigIntVertex1, expected solution is:
+
+        bigIntVertex1 | Prev vertex: ---           | sumOfWeights to bigIntVertex1: 0
+        bigIntVertex2 | Prev vertex: bigIntVertex1 | sumOfWeights to bigIntVertex2: 9223372036854775807
+        bigIntVertex3 | Prev vertex: bigIntVertex2 | sumOfWeights to bigIntVertex3: 18446744073709551614
+        bigIntVertex4 | Prev vertex: bigIntVertex3 | sumOfWeights to bigIntVertex4: 27670116110564327421
+        bigIntVertex5 | Prev vertex: bigIntVertex3 | sumOfWeights to bigIntVertex5: 27670116110564327421
+        bigIntVertex6 | Prev vertex: bigIntVertex5 | sumOfWeights to bigIntVertex6: 36893488147419103228
+
+         */
     public static Graph<BigInteger> getBigIntegerTestGraph() {
-        return new WeightedGraph<>();
+        Graph<BigInteger> graph = new WeightedGraph<>();
+
+        Vertex<BigInteger> v1 = new Vertex<>("bigIntVertex1");
+        Vertex<BigInteger> v2 = new Vertex<>("bigIntVertex2");
+        Vertex<BigInteger> v3 = new Vertex<>("bigIntVertex3");
+        Vertex<BigInteger> v4 = new Vertex<>("bigIntVertex4");
+        Vertex<BigInteger> v5 = new Vertex<>("bigIntVertex5");
+        Vertex<BigInteger> v6 = new Vertex<>("bigIntVertex6");
+
+        List<Vertex<BigInteger>> allVertexes = List.of(v1, v2, v3, v4, v5, v6);
+        allVertexes.forEach(graph::addVertex);
+
+        graph.addEdge(v1, v2, new BigInteger("9223372036854775807"));
+        graph.addEdge(v2, v3, new BigInteger("9223372036854775807"));
+        graph.addEdge(v3, v5, new BigInteger("9223372036854775807"));
+        graph.addEdge(v2, v5, new BigInteger("27670116110564327421"));
+        graph.addEdge(v5, v6, new BigInteger("9223372036854775807"));
+        graph.addEdge(v3, v4, new BigInteger("9223372036854775807"));
+
+        return graph;
     }
 
     public static Graph<BigDecimal> getBigDecimalTestGraph() {
