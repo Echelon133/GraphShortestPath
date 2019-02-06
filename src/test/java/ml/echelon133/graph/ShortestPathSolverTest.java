@@ -3,6 +3,7 @@ package ml.echelon133.graph;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -301,6 +302,54 @@ public class ShortestPathSolverTest {
                 case "doubleVertex5":
                     assertEquals("doubleVertex1", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("7.1").doubleValue(), vertexSumOfWeights, 0.00001);
+                    break;
+                default:
+                    fail("Unexpected vertex in the tested graph");
+                    break;
+            }
+        }
+    }
+
+    @Test
+    public void bigIntegerGraphShortestPathTest() {
+        Graph<BigInteger> bigIntGraph = TestGraphStore.getBigIntegerTestGraph();
+        ShortestPathSolver<BigInteger> sps = new ShortestPathSolver<>(bigIntGraph);
+
+        Vertex<BigInteger> startVertex = bigIntGraph
+                .getVertexes().stream().filter(v -> v.getName().equals("bigIntVertex1")).findFirst().get();
+
+        Map<Vertex<BigInteger>, VertexResult<BigInteger>> resultMap = sps.solveStartingFrom(startVertex);
+
+        for (Map.Entry<Vertex<BigInteger>, VertexResult<BigInteger>> entry : resultMap.entrySet()) {
+
+            Vertex<BigInteger> testedVertex = entry.getKey();
+            VertexResult<BigInteger> testedVertexResult = entry.getValue();
+
+            // Expected values are written in a comment of TestGraphStore.getBigIntegerTestGraph() method
+            switch (testedVertex.getName()) {
+                case "bigIntVertex1":
+                    assertNull(testedVertexResult.getPreviousVertex());
+                    assertEquals(new BigDecimal("0"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigIntVertex2":
+                    assertEquals("bigIntVertex1", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("9223372036854775807"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigIntVertex3":
+                    assertEquals("bigIntVertex2", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("18446744073709551614"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigIntVertex4":
+                    assertEquals("bigIntVertex3", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("27670116110564327421"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigIntVertex5":
+                    assertEquals("bigIntVertex3", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("27670116110564327421"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigIntVertex6":
+                    assertEquals("bigIntVertex5", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("36893488147419103228"), testedVertexResult.getSumOfWeights());
                     break;
                 default:
                     fail("Unexpected vertex in the tested graph");
