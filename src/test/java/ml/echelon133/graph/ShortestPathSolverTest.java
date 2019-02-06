@@ -210,4 +210,56 @@ public class ShortestPathSolverTest {
             }
         }
     }
+
+
+    @Test
+    public void floatGraphShortestPathTest() {
+        Graph<Float> floatGraph = TestGraphStore.getFloatTestGraph();
+        ShortestPathSolver<Float> sps = new ShortestPathSolver<>(floatGraph);
+
+        Vertex<Float> startVertex = floatGraph
+                .getVertexes().stream().filter(v -> v.getName().equals("floatVertex1")).findFirst().get();
+
+        Map<Vertex<Float>, VertexResult<Float>> resultMap = sps.solveStartingFrom(startVertex);
+
+        for (Map.Entry<Vertex<Float>, VertexResult<Float>> entry : resultMap.entrySet()) {
+
+            Vertex<Float> testedVertex = entry.getKey();
+            VertexResult<Float> testedVertexResult = entry.getValue();
+
+            // needed for comparing floats with delta
+            float vertexSumOfWeights = testedVertexResult.getSumOfWeights().floatValue();
+
+            // Expected values are written in a comment of TestGraphStore.getFloatTestGraph() method
+            switch (testedVertex.getName()) {
+                case "floatVertex1":
+                    assertNull(testedVertexResult.getPreviousVertex());
+                    assertEquals(new BigDecimal("0").floatValue(), vertexSumOfWeights, 0.00001f);
+                    break;
+                case "floatVertex2":
+                    assertEquals("floatVertex1", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("13.856").floatValue(), vertexSumOfWeights, 0.00001f);
+                    break;
+                case "floatVertex3":
+                    assertEquals("floatVertex1", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("13.855").floatValue(), vertexSumOfWeights, 0.00001f);
+                    break;
+                case "floatVertex4":
+                    assertEquals("floatVertex2", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("7820.389186").floatValue(), vertexSumOfWeights, 0.00001f);
+                    break;
+                case "floatVertex5":
+                    assertEquals("floatVertex3", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("13.856").floatValue(), vertexSumOfWeights, 0.00001f);
+                    break;
+                case "floatVertex6":
+                    assertEquals("floatVertex3", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("14.39179").floatValue(), vertexSumOfWeights, 0.00001f);
+                    break;
+                default:
+                    fail("Unexpected vertex in the tested graph");
+                    break;
+            }
+        }
+    }
 }
