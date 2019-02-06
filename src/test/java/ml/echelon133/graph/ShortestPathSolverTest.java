@@ -357,4 +357,56 @@ public class ShortestPathSolverTest {
             }
         }
     }
+
+    @Test
+    public void bigDecimalGraphShortestPathTest() {
+        Graph<BigDecimal> bigDecGraph = TestGraphStore.getBigDecimalTestGraph();
+        ShortestPathSolver<BigDecimal> sps = new ShortestPathSolver<>(bigDecGraph);
+
+        Vertex<BigDecimal> startVertex = bigDecGraph
+                .getVertexes().stream().filter(v -> v.getName().equals("bigDecVertex1")).findFirst().get();
+
+        Map<Vertex<BigDecimal>, VertexResult<BigDecimal>> resultMap = sps.solveStartingFrom(startVertex);
+
+        for (Map.Entry<Vertex<BigDecimal>, VertexResult<BigDecimal>> entry : resultMap.entrySet()) {
+
+            Vertex<BigDecimal> testedVertex = entry.getKey();
+            VertexResult<BigDecimal> testedVertexResult = entry.getValue();
+
+            // Expected values are written in a comment of TestGraphStore.getBigDecimalTestGraph() method
+            switch (testedVertex.getName()) {
+                case "bigDecVertex1":
+                    assertNull(testedVertexResult.getPreviousVertex());
+                    assertEquals(new BigDecimal("0"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigDecVertex2":
+                    assertEquals("bigDecVertex1", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("0.000001"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigDecVertex3":
+                    assertEquals("bigDecVertex7", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("0.00000010001001"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigDecVertex4":
+                    assertEquals("bigDecVertex2", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("0.000001001"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigDecVertex5":
+                    assertEquals("bigDecVertex1", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("0.0000001"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigDecVertex6":
+                    assertEquals("bigDecVertex3", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("0.0000001000100100001"), testedVertexResult.getSumOfWeights());
+                    break;
+                case "bigDecVertex7":
+                    assertEquals("bigDecVertex5", testedVertexResult.getPreviousVertex().getName());
+                    assertEquals(new BigDecimal("0.00000010001"), testedVertexResult.getSumOfWeights());
+                    break;
+                default:
+                    fail("Unexpected vertex in the tested graph");
+                    break;
+            }
+        }
+    }
 }
