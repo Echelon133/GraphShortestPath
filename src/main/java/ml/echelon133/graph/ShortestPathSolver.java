@@ -42,7 +42,29 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
     }
 
     private void relax(Vertex<T> v1, Vertex<T> v2) {
+        // if v2 was not visited/relaxed yet, it is not present in resultMap
+        putVertexInResultMapIfNotContains(v2, false);
 
+        VertexResult<T> v1Result = resultMap.get(v1);
+        VertexResult<T> v2Result = resultMap.get(v2);
+
+        BigDecimal v1ToV2Weight = v1.getWeightTo(v2);
+        BigDecimal weightToV1 = v1Result.getSumOfWeights(); // weight from start vertex to v1
+        BigDecimal weightToV2 = v2Result.getSumOfWeights(); // weight from start vertex to v2
+        BigDecimal potentialNewPathWeight = v1ToV2Weight.add(weightToV1);
+
+        if (weightToV2 == null || weightToV2.compareTo(potentialNewPathWeight) > 0) {
+            // null value of weightToV2 means that potentialNewPathWeight is guaranteed to be smaller than weightToV2
+            // null value of getSumOfWeights is used to mark INFINITY weight value
+
+            v2Result.setSumOfWeights(potentialNewPathWeight);
+            v2Result.setPreviousVertex(v1);
+
+            // update the priority of v2 after updating its sumOfWeights value
+            // the simplest way to update priority in PriorityQueue is to remove an element and put it again
+            resultMap.remove(v2);
+            resultMap.put(v2, v2Result);
+        }
     }
 
     public Map<Vertex<T>, VertexResult<T>> solveStartingFrom(Vertex<T> v) throws IllegalArgumentException {
