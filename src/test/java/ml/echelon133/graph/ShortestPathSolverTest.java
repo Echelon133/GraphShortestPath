@@ -12,7 +12,7 @@ public class ShortestPathSolverTest {
 
     @Test
     public void solveStartingFromThrowsExceptionWhenVertexDoesNotBelongToGraph() {
-        String expectedMsg = "Graph does not contain vertex given as an argument";
+        String expectedMsg = "Graph does not contain the vertex given as an argument";
         String receivedMsg = "";
 
         try {
