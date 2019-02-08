@@ -30,7 +30,15 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
     }
 
     private void putVertexInResultMapIfNotContains(Vertex<T> v, boolean startVertex) {
+        if (!resultMap.containsKey(v)) {
+            VertexResult<T> vResult = new VertexResult<>(v);
 
+            if (startVertex) {
+                // vertex that we start from always has sumOfWeights equal to 0
+                vResult.setSumOfWeights(new BigDecimal(0));
+            }
+            resultMap.put(v, vResult);
+        }
     }
 
     private void relax(Vertex<T> v1, Vertex<T> v2) {
