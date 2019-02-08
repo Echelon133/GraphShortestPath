@@ -28,4 +28,25 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
         this.workQueue = new PriorityQueue<>(new VertexComparator());
         this.resultMap = new HashMap<>();
     }
+
+    private void putVertexInResultMapIfNotContains(Vertex<T> v, boolean startVertex) {
+
+    }
+
+    private void relax(Vertex<T> v1, Vertex<T> v2) {
+
+    }
+
+    public Map<Vertex<T>, VertexResult<T>> solveStartingFrom(Vertex<T> v) throws IllegalArgumentException {
+        // Algorithm ref: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+
+        // Clear map of any info from previous method calls
+        resultMap.clear();
+
+        if (!graph.getVertexes().contains(v)) {
+            throw new IllegalArgumentException("Graph does not contain the vertex given as an argument");
+        }
+
+        return resultMap;
+    }
 }
