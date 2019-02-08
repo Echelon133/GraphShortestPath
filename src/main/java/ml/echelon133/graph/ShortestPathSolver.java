@@ -77,6 +77,23 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
             throw new IllegalArgumentException("Graph does not contain the vertex given as an argument");
         }
 
+        workQueue.add(v);
+        putVertexInResultMapIfNotContains(v, true);
+
+        while (!workQueue.isEmpty()) {
+            Vertex<T> minWeightVertex = workQueue.remove();
+            visitedVertexes.add(minWeightVertex);
+            putVertexInResultMapIfNotContains(minWeightVertex, false);
+
+            for (Edge<T> e : minWeightVertex.getEdges()) {
+                relax(e.getSource(), e.getDestination());
+
+                if (!visitedVertexes.contains(e.getDestination())) {
+                    workQueue.add(e.getDestination());
+                }
+            }
+        }
+
         return resultMap;
     }
 }
