@@ -70,7 +70,7 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
     public Map<Vertex<T>, VertexResult<T>> solveStartingFrom(Vertex<T> v) throws IllegalArgumentException {
         // Algorithm ref: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
-        // Clear map of any info from previous method calls
+        // Clear any info from previous method calls
         resultMap.clear();
         visitedVertexes.clear();
 
