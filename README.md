@@ -2,6 +2,8 @@
 
 ## Example Graph
 
+![GRAPH](https://github.com/Echelon133/WeightedGraphShortestPath/blob/master/graph_example/int_graph.png)
+
 ```java
 Graph<Integer> graph = new WeightedGraph<>();
 
