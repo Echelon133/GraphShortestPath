@@ -72,6 +72,7 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
 
         // Clear map of any info from previous method calls
         resultMap.clear();
+        visitedVertexes.clear();
 
         if (!graph.getVertexes().contains(v)) {
             throw new IllegalArgumentException("Graph does not contain the vertex given as an argument");
