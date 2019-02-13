@@ -47,5 +47,5 @@ Map<Vertex<Integer>, VertexResult<Integer>> result = sps.solveStartingFrom(v1);
 
 
 Only vertexes that are reachable from the start vertex will be placed in the result map.
-Ex. if our graph has a vertex without any outgoing edges, and we will call **solveStartingFrom()** method passing that 
+For example, if our graph has a vertex without any outgoing edges, and we will call **solveStartingFrom()** method passing that 
 vertex as an argument, we will receive a map that has only one key (starting vertex). That key's value (**VertexResult<>**) will always have *sumOfWeights* equal to 0 and *previousVertex* set to *null*.
