@@ -51,6 +51,24 @@ public class WeightedGraphTest {
     }
 
     @Test
+    public void addingVertexWithNameThatAlreadyBelongsToGraphThrowsException() {
+        String expectedMsg = "Vertex with that name already belongs to this graph";
+        String receivedMsg = "";
+
+        Vertex<Long> v1 = new Vertex<>("test");
+        Vertex<Long> v2 = new Vertex<>("test");
+
+        try {
+            testGraph.addVertex(v1);
+            testGraph.addVertex(v2);
+        } catch (IllegalArgumentException ex) {
+            receivedMsg = ex.getMessage();
+        }
+
+        assertEquals(expectedMsg, receivedMsg);
+    }
+
+    @Test
     public void addingAndRemovingEdgesWorks() {
         Vertex<Long> v1 = new Vertex<>("v1");
         Vertex<Long> v2 = new Vertex<>("v2");
