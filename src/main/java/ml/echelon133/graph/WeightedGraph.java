@@ -2,6 +2,7 @@ package ml.echelon133.graph;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T> {
 
@@ -24,8 +25,14 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
     }
 
     @Override
-    public void addVertex(Vertex<T> v) {
-        vertexes.add(v);
+    public void addVertex(Vertex<T> v) throws IllegalArgumentException {
+        Optional<Vertex<T>> nameVertex = vertexes.stream().filter(vert -> vert.getName().equals(v.getName())).findFirst();
+
+        if (!nameVertex.isPresent()) {
+            vertexes.add(v);
+        } else {
+            throw new IllegalArgumentException("Vertex with that name already belongs to this graph");
+        }
     }
 
     @Override
