@@ -47,22 +47,31 @@ public class ShortestPathSolverTest {
                 case "byteVertex1":
                     assertNull(testedVertexResult.getPreviousVertex());
                     assertEquals(new BigDecimal("0"), testedVertexResult.getSumOfWeights());
+                    assertEquals(0, testedVertexResult.getPathToVertex().size());
                     break;
                 case "byteVertex2":
                     assertEquals("byteVertex5", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("14"), testedVertexResult.getSumOfWeights());
+                    assertEquals(2, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 case "byteVertex3":
                     assertEquals("byteVertex5", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("11"), testedVertexResult.getSumOfWeights());
+                    assertEquals(2, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 case "byteVertex4":
                     assertEquals("byteVertex2", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("47"), testedVertexResult.getSumOfWeights());
+                    assertEquals(3, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 case "byteVertex5":
                     assertEquals("byteVertex1", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("5"), testedVertexResult.getSumOfWeights());
+                    assertEquals(1, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 default:
                     // this should never execute
