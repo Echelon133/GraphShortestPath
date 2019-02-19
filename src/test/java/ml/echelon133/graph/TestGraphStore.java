@@ -9,11 +9,11 @@ public class TestGraphStore {
     /*
     If we start from byteVertex1, expected solution is:
 
-    byteVertex1 | Prev vertex: ---         | sumOfWeights to byteVertex1: 0
-    byteVertex2 | Prev vertex: byteVertex5 | sumOfWeights to byteVertex2: 14
-    byteVertex3 | Prev vertex: byteVertex5 | sumOfWeights to byteVertex3: 11
-    byteVertex4 | Prev vertex: byteVertex2 | sumOfWeights to byteVertex4: 47
-    byteVertex5 | Prev vertex: byteVertex1 | sumOfWeights to byteVertex5: 5
+    byteVertex1 | Prev vertex: ---         | sumOfWeights to byteVertex1: 0  | pathToVertex: []
+    byteVertex2 | Prev vertex: byteVertex5 | sumOfWeights to byteVertex2: 14 | pathToVertex: [byteVertex1, byteVertex5]
+    byteVertex3 | Prev vertex: byteVertex5 | sumOfWeights to byteVertex3: 11 | pathToVertex: [byteVertex1, byteVertex5]
+    byteVertex4 | Prev vertex: byteVertex2 | sumOfWeights to byteVertex4: 47 | pathToVertex: [byteVertex1, byteVertex5, byteVertex2]
+    byteVertex5 | Prev vertex: byteVertex1 | sumOfWeights to byteVertex5: 5  | pathToVertex: [byteVertex1]
 
      */
     public static Graph<Byte> getByteTestGraph() {
