@@ -45,11 +45,11 @@ public class TestGraphStore {
     /*
     If we start from shortVertex1, expected solution is:
 
-    shortVertex1 | Prev vertex: ---          | sumOfWeights to shortVertex1: 0
-    shortVertex2 | Prev vertex: shortVertex5 | sumOfWeights to shortVertex2: 9
-    shortVertex3 | Prev vertex: shortVertex5 | sumOfWeights to shortVertex3: 5
-    shortVertex4 | Prev vertex: shortVertex2 | sumOfWeights to shortVertex4: 32772
-    shortVertex5 | Prev vertex: shortVertex1 | sumOfWeights to shortVertex5: 32767
+    shortVertex1 | Prev vertex: ---          | sumOfWeights to shortVertex1: 0      | pathToVertex: []
+    shortVertex2 | Prev vertex: shortVertex3 | sumOfWeights to shortVertex2: 9      | pathToVertex: [shortVertex1, shortVertex3]
+    shortVertex3 | Prev vertex: shortVertex1 | sumOfWeights to shortVertex3: 5      | pathToVertex: [shortVertex1]
+    shortVertex4 | Prev vertex: shortVertex3 | sumOfWeights to shortVertex4: 32772  | pathToVertex: [shortVertex1, shortVertex3]
+    shortVertex5 | Prev vertex: shortVertex1 | sumOfWeights to shortVertex5: 32767  | pathToVertex: [shortVertex1]
 
      */
     public static Graph<Short> getShortTestGraph() {
