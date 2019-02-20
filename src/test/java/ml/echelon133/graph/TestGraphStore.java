@@ -116,12 +116,12 @@ public class TestGraphStore {
     /*
         If we start from longVertex1, expected solution is:
 
-        longVertex1 | Prev vertex: ---         | sumOfWeights to longVertex1: 0
-        longVertex2 | Prev vertex: longVertex1 | sumOfWeights to longVertex2: 9223372036854775807
-        longVertex3 | Prev vertex: longVertex2 | sumOfWeights to longVertex3: 18446744073709551614
-        longVertex4 | Prev vertex: longVertex2 | sumOfWeights to longVertex4: 9223372036854776110
-        longVertex5 | Prev vertex: longVertex4 | sumOfWeights to longVertex5: 9223372036854781110
-        longVertex6 | Prev vertex: longVertex4 | sumOfWeights to longVertex6: 9223372036854776410
+        longVertex1 | Prev vertex: ---         | sumOfWeights to longVertex1: 0                    | pathToVertex: []
+        longVertex2 | Prev vertex: longVertex1 | sumOfWeights to longVertex2: 9223372036854775807  | pathToVertex: [longVertex1]
+        longVertex3 | Prev vertex: longVertex2 | sumOfWeights to longVertex3: 18446744073709551614 | pathToVertex: [longVertex1, longVertex2]
+        longVertex4 | Prev vertex: longVertex2 | sumOfWeights to longVertex4: 9223372036854776110  | pathToVertex: [longVertex1, longVertex2]
+        longVertex5 | Prev vertex: longVertex4 | sumOfWeights to longVertex5: 9223372036854781110  | pathToVertex: [longVertex1, longVertex2, longVertex4]
+        longVertex6 | Prev vertex: longVertex4 | sumOfWeights to longVertex6: 9223372036854776410  | pathToVertex: [longVertex1, longVertex2, longVertex4]
 
          */
     public static Graph<Long> getLongTestGraph() {
