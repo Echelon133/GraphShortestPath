@@ -190,11 +190,11 @@ public class TestGraphStore {
     /*
         If we start from doubleVertex1, expected solution is:
 
-        doubleVertex1 | Prev vertex: ---           | sumOfWeights to doubleVertex1: 0
-        doubleVertex2 | Prev vertex: doubleVertex4 | sumOfWeights to doubleVertex2: 1008.667
-        doubleVertex3 | Prev vertex: doubleVertex1 | sumOfWeights to doubleVertex3: 1.8776
-        doubleVertex4 | Prev vertex: doubleVertex5 | sumOfWeights to doubleVertex4: 1008.666
-        doubleVertex5 | Prev vertex: doubleVertex1 | sumOfWeights to doubleVertex5: 7.1
+        doubleVertex1 | Prev vertex: ---           | sumOfWeights to doubleVertex1: 0        | pathToVertex: []
+        doubleVertex2 | Prev vertex: doubleVertex4 | sumOfWeights to doubleVertex2: 1008.667 | pathToVertex: [doubleVertex1, doubleVertex5, doubleVertex4]
+        doubleVertex3 | Prev vertex: doubleVertex1 | sumOfWeights to doubleVertex3: 1.8776   | pathToVertex: [doubleVertex1]
+        doubleVertex4 | Prev vertex: doubleVertex5 | sumOfWeights to doubleVertex4: 1008.666 | pathToVertex: [doubleVertex1, doubleVertex5]
+        doubleVertex5 | Prev vertex: doubleVertex1 | sumOfWeights to doubleVertex5: 7.1      | pathToVertex: [doubleVertex1]
 
          */
     public static Graph<Double> getDoubleTestGraph() {
