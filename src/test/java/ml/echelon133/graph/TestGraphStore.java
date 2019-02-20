@@ -79,12 +79,12 @@ public class TestGraphStore {
     /*
         If we start from intVertex1, expected solution is:
 
-        intVertex1 | Prev vertex: ---        | sumOfWeights to intVertex1: 0
-        intVertex2 | Prev vertex: intVertex5 | sumOfWeights to intVertex2: 2147485677
-        intVertex3 | Prev vertex: intVertex1 | sumOfWeights to intVertex3: 1000
-        intVertex4 | Prev vertex: intVertex3 | sumOfWeights to intVertex4: 1200
-        intVertex5 | Prev vertex: intVertex6 | sumOfWeights to intVertex5: 2147485647
-        intVertex6 | Prev vertex: intVertex3 | sumOfWeights to intVertex6: 2000
+        intVertex1 | Prev vertex: ---        | sumOfWeights to intVertex1: 0          | pathToVertex: []
+        intVertex2 | Prev vertex: intVertex5 | sumOfWeights to intVertex2: 2147485677 | pathToVertex: [intVertex1, intVertex3, intVertex6, intVertex5]
+        intVertex3 | Prev vertex: intVertex1 | sumOfWeights to intVertex3: 1000       | pathToVertex: [intVertex1]
+        intVertex4 | Prev vertex: intVertex3 | sumOfWeights to intVertex4: 1200       | pathToVertex: [intVertex1, intVertex3]
+        intVertex5 | Prev vertex: intVertex6 | sumOfWeights to intVertex5: 2147485647 | pathToVertex: [intVertex1, intVertex3, intVertex6]
+        intVertex6 | Prev vertex: intVertex3 | sumOfWeights to intVertex6: 2000       | pathToVertex: [intVertex1, intVertex3]
 
          */
     public static Graph<Integer> getIntegerTestGraph() {
