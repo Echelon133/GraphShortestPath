@@ -226,12 +226,12 @@ public class TestGraphStore {
     /*
         If we start from bigIntVertex1, expected solution is:
 
-        bigIntVertex1 | Prev vertex: ---           | sumOfWeights to bigIntVertex1: 0
-        bigIntVertex2 | Prev vertex: bigIntVertex1 | sumOfWeights to bigIntVertex2: 9223372036854775807
-        bigIntVertex3 | Prev vertex: bigIntVertex2 | sumOfWeights to bigIntVertex3: 18446744073709551614
-        bigIntVertex4 | Prev vertex: bigIntVertex3 | sumOfWeights to bigIntVertex4: 27670116110564327421
-        bigIntVertex5 | Prev vertex: bigIntVertex3 | sumOfWeights to bigIntVertex5: 27670116110564327421
-        bigIntVertex6 | Prev vertex: bigIntVertex5 | sumOfWeights to bigIntVertex6: 36893488147419103228
+        bigIntVertex1 | Prev vertex: ---           | sumOfWeights to bigIntVertex1: 0                    | pathToVertex: []
+        bigIntVertex2 | Prev vertex: bigIntVertex1 | sumOfWeights to bigIntVertex2: 9223372036854775807  | pathToVertex: [bigIntVertex1]
+        bigIntVertex3 | Prev vertex: bigIntVertex2 | sumOfWeights to bigIntVertex3: 18446744073709551614 | pathToVertex: [bigIntVertex1, bigIntVertex2]
+        bigIntVertex4 | Prev vertex: bigIntVertex3 | sumOfWeights to bigIntVertex4: 27670116110564327421 | pathToVertex: [bigIntVertex1, bigIntVertex2, bigIntVertex3]
+        bigIntVertex5 | Prev vertex: bigIntVertex3 | sumOfWeights to bigIntVertex5: 27670116110564327421 | pathToVertex: [bigIntVertex1, bigIntVertex2, bigIntVertex3]
+        bigIntVertex6 | Prev vertex: bigIntVertex5 | sumOfWeights to bigIntVertex6: 36893488147419103228 | pathToVertex: [bigIntVertex1, bigIntVertex2, bigIntVertex3, bigIntVertex5]
 
          */
     public static Graph<BigInteger> getBigIntegerTestGraph() {
