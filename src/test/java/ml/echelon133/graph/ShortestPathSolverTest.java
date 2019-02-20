@@ -390,26 +390,37 @@ public class ShortestPathSolverTest {
                 case "bigIntVertex1":
                     assertNull(testedVertexResult.getPreviousVertex());
                     assertEquals(new BigDecimal("0"), testedVertexResult.getSumOfWeights());
+                    assertEquals(0, testedVertexResult.getPathToVertex().size());
                     break;
                 case "bigIntVertex2":
                     assertEquals("bigIntVertex1", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("9223372036854775807"), testedVertexResult.getSumOfWeights());
+                    assertEquals(1, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 case "bigIntVertex3":
                     assertEquals("bigIntVertex2", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("18446744073709551614"), testedVertexResult.getSumOfWeights());
+                    assertEquals(2, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 case "bigIntVertex4":
                     assertEquals("bigIntVertex3", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("27670116110564327421"), testedVertexResult.getSumOfWeights());
+                    assertEquals(3, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 case "bigIntVertex5":
                     assertEquals("bigIntVertex3", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("27670116110564327421"), testedVertexResult.getSumOfWeights());
+                    assertEquals(3, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 case "bigIntVertex6":
                     assertEquals("bigIntVertex5", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("36893488147419103228"), testedVertexResult.getSumOfWeights());
+                    assertEquals(4, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 default:
                     fail("Unexpected vertex in the tested graph");
