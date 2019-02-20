@@ -260,13 +260,13 @@ public class TestGraphStore {
     /*
         If we start from bigDecVertex1, expected solution is:
 
-        bigDecVertex1 | Prev vertex: ---           | sumOfWeights to bigDecVertex1: 0
-        bigDecVertex2 | Prev vertex: bigDecVertex1 | sumOfWeights to bigDecVertex2: 0.000001
-        bigDecVertex3 | Prev vertex: bigDecVertex7 | sumOfWeights to bigDecVertex3: 0.00000010001001
-        bigDecVertex4 | Prev vertex: bigDecVertex2 | sumOfWeights to bigDecVertex4: 0.000001001
-        bigDecVertex5 | Prev vertex: bigDecVertex1 | sumOfWeights to bigDecVertex5: 0.0000001
-        bigDecVertex6 | Prev vertex: bigDecVertex3 | sumOfWeights to bigDecVertex6: 0.0000001000100100001
-        bigDecVertex7 | Prev vertex: bigDecVertex5 | sumOfWeights to bigDecVertex7: 0.00000010001
+        bigDecVertex1 | Prev vertex: ---           | sumOfWeights to bigDecVertex1: 0                     | pathToVertex: []
+        bigDecVertex2 | Prev vertex: bigDecVertex1 | sumOfWeights to bigDecVertex2: 0.000001              | pathToVertex: [bigDecVertex1]
+        bigDecVertex3 | Prev vertex: bigDecVertex7 | sumOfWeights to bigDecVertex3: 0.00000010001001      | pathToVertex: [bigDecVertex1, bigDecVertex5, bigDecVertex7]
+        bigDecVertex4 | Prev vertex: bigDecVertex2 | sumOfWeights to bigDecVertex4: 0.000001001           | pathToVertex: [bigDecVertex1, bigDecVertex2]
+        bigDecVertex5 | Prev vertex: bigDecVertex1 | sumOfWeights to bigDecVertex5: 0.0000001             | pathToVertex: [bigDecVertex1]
+        bigDecVertex6 | Prev vertex: bigDecVertex3 | sumOfWeights to bigDecVertex6: 0.0000001000100100001 | pathToVertex: [bigDecVertex1, bigDecVertex5, bigDecVertex7, bigDecVertex3]
+        bigDecVertex7 | Prev vertex: bigDecVertex5 | sumOfWeights to bigDecVertex7: 0.00000010001         | pathToVertex: [bigDecVertex1, bigDecVertex5]
 
          */
     public static Graph<BigDecimal> getBigDecimalTestGraph() {
