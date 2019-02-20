@@ -153,12 +153,12 @@ public class TestGraphStore {
     /*
         If we start from floatVertex1, expected solution is:
 
-        floatVertex1 | Prev vertex: ---          | sumOfWeights to floatVertex1: 0
-        floatVertex2 | Prev vertex: floatVertex1 | sumOfWeights to floatVertex2: 13.856
-        floatVertex3 | Prev vertex: floatVertex1 | sumOfWeights to floatVertex3: 13.855
-        floatVertex4 | Prev vertex: floatVertex2 | sumOfWeights to floatVertex4: 7820.389186
-        floatVertex5 | Prev vertex: floatVertex3 | sumOfWeights to floatVertex5: 13.856
-        floatVertex6 | Prev vertex: floatVertex3 | sumOfWeights to floatVertex6: 14.39179
+        floatVertex1 | Prev vertex: ---          | sumOfWeights to floatVertex1: 0           | pathToVertex: []
+        floatVertex2 | Prev vertex: floatVertex1 | sumOfWeights to floatVertex2: 13.856      | pathToVertex: [floatVertex1]
+        floatVertex3 | Prev vertex: floatVertex1 | sumOfWeights to floatVertex3: 13.855      | pathToVertex: [floatVertex1]
+        floatVertex4 | Prev vertex: floatVertex2 | sumOfWeights to floatVertex4: 7820.389186 | pathToVertex: [floatVertex1, floatVertex2]
+        floatVertex5 | Prev vertex: floatVertex3 | sumOfWeights to floatVertex5: 13.856      | pathToVertex: [floatVertex1, floatVertex3]
+        floatVertex6 | Prev vertex: floatVertex3 | sumOfWeights to floatVertex6: 14.39179    | pathToVertex: [floatVertex1, floatVertex3]
 
          */
     public static Graph<Float> getFloatTestGraph() {
