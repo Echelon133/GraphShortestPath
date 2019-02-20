@@ -101,22 +101,31 @@ public class ShortestPathSolverTest {
                 case "shortVertex1":
                     assertNull(testedVertexResult.getPreviousVertex());
                     assertEquals(new BigDecimal("0"), testedVertexResult.getSumOfWeights());
+                    assertEquals(0, testedVertexResult.getPathToVertex().size());
                     break;
                 case "shortVertex2":
                     assertEquals("shortVertex3", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("9"), testedVertexResult.getSumOfWeights());
+                    assertEquals(2, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 case "shortVertex3":
                     assertEquals("shortVertex1", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("5"), testedVertexResult.getSumOfWeights());
+                    assertEquals(1, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 case "shortVertex4":
                     assertEquals("shortVertex3", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("32772"), testedVertexResult.getSumOfWeights());
+                    assertEquals(2, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 case "shortVertex5":
                     assertEquals("shortVertex1", testedVertexResult.getPreviousVertex().getName());
                     assertEquals(new BigDecimal("32767"), testedVertexResult.getSumOfWeights());
+                    assertEquals(1, testedVertexResult.getPathToVertex().size());
+                    assertEquals(testedVertexResult.getPreviousVertex(), testedVertexResult.getPathToVertex().getLast());
                     break;
                 default:
                     fail("Unexpected vertex in the tested graph");
