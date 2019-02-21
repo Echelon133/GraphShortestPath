@@ -37,6 +37,9 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
 
     @Override
     public void removeVertex(Vertex<T> v) {
+        // Remove every edge from the graph that contains removed vertex
+        this.edges.removeIf(edge -> edge.isVertexInEdge(v));
+
         vertexes.remove(v);
     }
 

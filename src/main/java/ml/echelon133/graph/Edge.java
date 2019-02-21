@@ -21,6 +21,10 @@ public class Edge<T extends Number & Comparable<T>> {
         this.weight = weight;
     }
 
+    public Boolean isVertexInEdge(Vertex<T> v) {
+        return (v.equals(source) || v.equals(destination));
+    }
+
     public Vertex<T> getSource() {
         return source;
     }
