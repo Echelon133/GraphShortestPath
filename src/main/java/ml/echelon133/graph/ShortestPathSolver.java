@@ -59,6 +59,7 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
 
             v2Result.setSumOfWeights(potentialNewPathWeight);
             v2Result.setPreviousVertex(v1);
+            v2Result.copyAndUpdatePathToVertexFrom(v1Result);
 
             // update the priority of v2 after updating its sumOfWeights value
             // the simplest way to update priority in PriorityQueue is to remove an element and put it again

@@ -36,16 +36,20 @@ Map<Vertex<Integer>, VertexResult<Integer>> result = sps.solveStartingFrom(v1);
 ```
 ### Result
 
-|       Vertex       | Previous Vertex | Sum of weights to vertex |
-|:------------------:|:---------------:|:------------------------:|
-| intVertex1 (start) |       ---       |             0            |
-|     intVertex2     |    intVertex5   |        2147485677        |
-|     intVertex3     |    intVertex1   |           1000           |
-|     intVertex4     |    intVertex3   |           1200           |
-|     intVertex5     |    intVertex6   |        2147485647        |
-|     intVertex6     |    intVertex3   |           2000           |
+|       Vertex       | Previous Vertex | Sum of weights to vertex | pathToVertex                                   |
+|:------------------:|:---------------:|:------------------------:|:----------------------------------------------:|
+| intVertex1 (start) |       ---       |             0            | ---                                            |
+|     intVertex2     |    intVertex5   |        2147485677        | intVertex1, intVertex3, intVertex6, intVertex5 |
+|     intVertex3     |    intVertex1   |           1000           | intVertex1                                     |
+|     intVertex4     |    intVertex3   |           1200           | intVertex1, intVertex3                         |
+|     intVertex5     |    intVertex6   |        2147485647        | intVertex1, intVertex3, intVertex6             |
+|     intVertex6     |    intVertex3   |           2000           | intVertex1, intVertex3                         |
 
 
 Only vertexes that are reachable from the start vertex will be placed in the result map.
 For example, if our graph has a vertex without any outgoing edges, and we will call **solveStartingFrom()** method passing that 
 vertex as an argument, we will receive a map that has only one key (starting vertex). That key's value (**VertexResult<>**) will always have *sumOfWeights* equal to 0 and *previousVertex* set to *null*.
+
+**VertexResult<>** *pathToVertex* is a linked list that stores vertexes in order in which they were visited before 
+reaching the vertex that is a key of **VertexResult<>**. The table above shows, that the last element of *pathToVertex*
+is always equal to the element that is stored in *previousVertex* of **VertexResult<>**. 
