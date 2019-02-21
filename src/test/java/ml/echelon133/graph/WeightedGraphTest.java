@@ -118,4 +118,42 @@ public class WeightedGraphTest {
         assertEquals(0, v2.getEdges().size());
         assertEquals(0, v3.getEdges().size());
     }
+
+    @Test
+    public void removingVertexRemovesEdgesThatContainThatVertex() {
+        Graph<Integer> graph = new WeightedGraph<>();
+
+        Vertex<Integer> v1 = new Vertex<>("v1");
+        Vertex<Integer> v2 = new Vertex<>("v2");
+        Vertex<Integer> v3 = new Vertex<>("v3");
+        Vertex<Integer> v4 = new Vertex<>("v4");
+        Vertex<Integer> v5 = new Vertex<>("v5");
+
+        List<Vertex<Integer>> allVertexes = List.of(v1, v2, v3, v4, v5);
+        allVertexes.forEach(graph::addVertex);
+
+        Edge<Integer> e1 = new Edge<>(v1, v2, 1);
+        Edge<Integer> e2 = new Edge<>(v1, v3, 3);
+        Edge<Integer> e3 = new Edge<>(v1, v5, 5);
+        Edge<Integer> e4 = new Edge<>(v3, v5, 6);
+        Edge<Integer> e5 = new Edge<>(v5, v4, 7);
+        Edge<Integer> e6 = new Edge<>(v3, v4, 4);
+        Edge<Integer> e7 = new Edge<>(v2, v4, 2);
+
+        List<Edge<Integer>> allEdges = List.of(e1, e2, e3, e4, e5, e6, e7);
+        allEdges.forEach(graph::addEdge);
+
+        graph.removeVertex(v3);
+
+        // v3 is removed
+        assertFalse(graph.getVertexes().contains(v3));
+
+        // removing v3 should also remove 3 edges from the graph (7 edges before, 4 edges after)
+        assertEquals(4, graph.getEdges().size());
+
+        // e2, e4, e6 should no longer be in the graph (because they use a vertex that no longer belongs to the graph)
+        assertFalse(graph.getEdges().contains(e2));
+        assertFalse(graph.getEdges().contains(e4));
+        assertFalse(graph.getEdges().contains(e6));
+    }
 }
