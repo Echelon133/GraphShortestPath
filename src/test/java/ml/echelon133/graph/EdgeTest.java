@@ -133,4 +133,30 @@ public class EdgeTest {
         assertEquals(e2ExpectedWeight, e2.getWeightAsBigDecimal());
     }
 
+    @Test
+    public void isVertexInEdgeReturnsTrueWhenVertexIsInEdge() {
+        Vertex<Integer> v1 = new Vertex<>("v1");
+        Vertex<Integer> v2 = new Vertex<>("v2");
+
+        Edge<Integer> e1 = new Edge<>(v1, v2, 1000);
+
+        assertTrue(e1.isVertexInEdge(v1));
+        assertTrue(e1.isVertexInEdge(v2));
+    }
+
+    @Test
+    public void isVertexInEdgeReturnsFalseWhenVertexIsNotInEdge() {
+        Vertex<Double> v1 = new Vertex<>("v1");
+        Vertex<Double> v2 = new Vertex<>("v2");
+        Vertex<Double> v3 = new Vertex<>("v3");
+        Vertex<Double> v4 = new Vertex<>("v4");
+
+        Edge<Double> e1 = new Edge<>(v1, v2, 0.15);
+        Edge<Double> e2 = new Edge<>(v3, v4, 0.16);
+
+        assertFalse(e1.isVertexInEdge(v3));
+        assertFalse(e1.isVertexInEdge(v4));
+        assertFalse(e2.isVertexInEdge(v1));
+        assertFalse(e2.isVertexInEdge(v2));
+    }
 }
