@@ -351,4 +351,50 @@ public class GraphJsonTest {
             assertEquals(bIntegerEdge.getWeightAsBigDecimal(), bDecimalEdge.getWeightAsBigDecimal());
         }
     }
+
+    @Test
+    public void serializeAndDeserializeBigDecimalGraphTest() throws Exception {
+        Graph<BigDecimal> bDecimalOrgGraph = TestGraphStore.getBigDecimalTestGraph();
+        String serialized = mapper.writeValueAsString(bDecimalOrgGraph);
+
+        Graph<BigDecimal> deserializedGraph = mapper.readValue(serialized, graphBigDecimalType);
+
+        // both graphs have the same number of vertexes and edges
+        assertEquals(bDecimalOrgGraph.getVertexes().size(), deserializedGraph.getVertexes().size());
+        assertEquals(bDecimalOrgGraph.getEdges().size(), deserializedGraph.getEdges().size());
+
+        int vertexesSize = bDecimalOrgGraph.getVertexes().size();
+        int edgesSize = bDecimalOrgGraph.getEdges().size();
+
+        List<Vertex<BigDecimal>> bDecimalOrgGraphVertexes = bDecimalOrgGraph.getVertexes();
+        List<Vertex<BigDecimal>> bDecimalGraphVertexes = deserializedGraph.getVertexes();
+
+        // both graphs have identical vertexes
+        for (int i = 0; i < vertexesSize; i++) {
+            String bDecimalOrgGraphVertexName = bDecimalOrgGraphVertexes.get(i).getName();
+            String deserializedGraphVertexName = bDecimalGraphVertexes.get(i).getName();
+            assertEquals(bDecimalOrgGraphVertexName, deserializedGraphVertexName);
+        }
+
+        List<Edge<BigDecimal>> bDecimalOrgGraphEdges = bDecimalOrgGraph.getEdges();
+        List<Edge<BigDecimal>> deserializedGraphEdges = deserializedGraph.getEdges();
+
+        // both graphs have identical edges
+        for (int j = 0; j < edgesSize; j++) {
+            Edge<BigDecimal> bDecimalOrgEdge = bDecimalOrgGraphEdges.get(j);
+            Edge<BigDecimal> bDecimalEdge = deserializedGraphEdges.get(j);
+
+            String expectedSourceVertexName = bDecimalOrgEdge.getSource().getName();
+            String receivedSourceVertexName = bDecimalEdge.getSource().getName();
+            assertEquals(expectedSourceVertexName, receivedSourceVertexName);
+
+            String expectedDestinationVertexName = bDecimalOrgEdge.getDestination().getName();
+            String receivedDestinationVertexName = bDecimalEdge.getDestination().getName();
+            assertEquals(expectedDestinationVertexName, receivedDestinationVertexName);
+
+            // compare double representations of BigDecimal, because e.g. value 0.1000 is serialized as 0.1 (scientific notation)
+            // values 0.100 and 0.1 are not considered equal
+            assertEquals(bDecimalOrgEdge.getWeight().doubleValue(), bDecimalEdge.getWeightAsBigDecimal().doubleValue());
+        }
+    }
 }
