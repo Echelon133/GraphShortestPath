@@ -86,4 +86,48 @@ public class GraphJsonTest {
             assertEquals(byteEdge.getWeightAsBigDecimal(), bDecimalEdge.getWeightAsBigDecimal());
         }
     }
+
+    @Test
+    public void serializeAndDeserializeShortGraphTest() throws Exception {
+        Graph<Short> shortGraph = TestGraphStore.getShortTestGraph();
+        String serialized = mapper.writeValueAsString(shortGraph);
+
+        Graph<BigDecimal> deserializedGraph = mapper.readValue(serialized, graphBigDecimalType);
+
+        // both graphs have the same number of vertexes and edges
+        assertEquals(shortGraph.getVertexes().size(), deserializedGraph.getVertexes().size());
+        assertEquals(shortGraph.getEdges().size(), deserializedGraph.getEdges().size());
+
+        int vertexesSize = shortGraph.getVertexes().size();
+        int edgesSize = shortGraph.getEdges().size();
+
+        List<Vertex<Short>> shortGraphVertexes = shortGraph.getVertexes();
+        List<Vertex<BigDecimal>> bDecimalGraphVertexes = deserializedGraph.getVertexes();
+
+        // both graphs have identical vertexes
+        for (int i = 0; i < vertexesSize; i++) {
+            String shortGraphVertexName = shortGraphVertexes.get(i).getName();
+            String deserializedGraphVertexName = bDecimalGraphVertexes.get(i).getName();
+            assertEquals(shortGraphVertexName, deserializedGraphVertexName);
+        }
+
+        List<Edge<Short>> shortGraphEdges = shortGraph.getEdges();
+        List<Edge<BigDecimal>> deserializedGraphEdges = deserializedGraph.getEdges();
+
+        // both graphs have identical edges
+        for (int j = 0; j < edgesSize; j++) {
+            Edge<Short> shortEdge = shortGraphEdges.get(j);
+            Edge<BigDecimal> bDecimalEdge = deserializedGraphEdges.get(j);
+
+            String expectedSourceVertexName = shortEdge.getSource().getName();
+            String receivedSourceVertexName = bDecimalEdge.getSource().getName();
+            assertEquals(expectedSourceVertexName, receivedSourceVertexName);
+
+            String expectedDestinationVertexName = shortEdge.getDestination().getName();
+            String receivedDestinationVertexName = bDecimalEdge.getDestination().getName();
+            assertEquals(expectedDestinationVertexName, receivedDestinationVertexName);
+
+            assertEquals(shortEdge.getWeightAsBigDecimal(), bDecimalEdge.getWeightAsBigDecimal());
+        }
+    }
 }
