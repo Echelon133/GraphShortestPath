@@ -262,4 +262,48 @@ public class GraphJsonTest {
             assertEquals(floatEdge.getWeight(), bDecimalEdge.getWeightAsBigDecimal().floatValue(), 0.00000000001f);
         }
     }
+
+    @Test
+    public void serializeAndDeserializeDoubleGraphTest() throws Exception {
+        Graph<Double> doubleGraph = TestGraphStore.getDoubleTestGraph();
+        String serialized = mapper.writeValueAsString(doubleGraph);
+
+        Graph<BigDecimal> deserializedGraph = mapper.readValue(serialized, graphBigDecimalType);
+
+        // both graphs have the same number of vertexes and edges
+        assertEquals(doubleGraph.getVertexes().size(), deserializedGraph.getVertexes().size());
+        assertEquals(doubleGraph.getEdges().size(), deserializedGraph.getEdges().size());
+
+        int vertexesSize = doubleGraph.getVertexes().size();
+        int edgesSize = doubleGraph.getEdges().size();
+
+        List<Vertex<Double>> doubleGraphVertexes = doubleGraph.getVertexes();
+        List<Vertex<BigDecimal>> bDecimalGraphVertexes = deserializedGraph.getVertexes();
+
+        // both graphs have identical vertexes
+        for (int i = 0; i < vertexesSize; i++) {
+            String doubleGraphVertexName = doubleGraphVertexes.get(i).getName();
+            String deserializedGraphVertexName = bDecimalGraphVertexes.get(i).getName();
+            assertEquals(doubleGraphVertexName, deserializedGraphVertexName);
+        }
+
+        List<Edge<Double>> doubleGraphEdges = doubleGraph.getEdges();
+        List<Edge<BigDecimal>> deserializedGraphEdges = deserializedGraph.getEdges();
+
+        // both graphs have identical edges
+        for (int j = 0; j < edgesSize; j++) {
+            Edge<Double> doubleEdge = doubleGraphEdges.get(j);
+            Edge<BigDecimal> bDecimalEdge = deserializedGraphEdges.get(j);
+
+            String expectedSourceVertexName = doubleEdge.getSource().getName();
+            String receivedSourceVertexName = bDecimalEdge.getSource().getName();
+            assertEquals(expectedSourceVertexName, receivedSourceVertexName);
+
+            String expectedDestinationVertexName = doubleEdge.getDestination().getName();
+            String receivedDestinationVertexName = bDecimalEdge.getDestination().getName();
+            assertEquals(expectedDestinationVertexName, receivedDestinationVertexName);
+
+            assertEquals(doubleEdge.getWeight(), bDecimalEdge.getWeightAsBigDecimal().doubleValue(), 0.00000000001f);
+        }
+    }
 }
