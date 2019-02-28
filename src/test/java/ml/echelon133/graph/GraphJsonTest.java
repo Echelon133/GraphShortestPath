@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -304,6 +305,50 @@ public class GraphJsonTest {
             assertEquals(expectedDestinationVertexName, receivedDestinationVertexName);
 
             assertEquals(doubleEdge.getWeight(), bDecimalEdge.getWeightAsBigDecimal().doubleValue(), 0.00000000001f);
+        }
+    }
+
+    @Test
+    public void serializeAndDeserializeBigIntegerGraphTest() throws Exception {
+        Graph<BigInteger> bIntegerGraph = TestGraphStore.getBigIntegerTestGraph();
+        String serialized = mapper.writeValueAsString(bIntegerGraph);
+
+        Graph<BigDecimal> deserializedGraph = mapper.readValue(serialized, graphBigDecimalType);
+
+        // both graphs have the same number of vertexes and edges
+        assertEquals(bIntegerGraph.getVertexes().size(), deserializedGraph.getVertexes().size());
+        assertEquals(bIntegerGraph.getEdges().size(), deserializedGraph.getEdges().size());
+
+        int vertexesSize = bIntegerGraph.getVertexes().size();
+        int edgesSize = bIntegerGraph.getEdges().size();
+
+        List<Vertex<BigInteger>> bIntegerGraphVertexes = bIntegerGraph.getVertexes();
+        List<Vertex<BigDecimal>> bDecimalGraphVertexes = deserializedGraph.getVertexes();
+
+        // both graphs have identical vertexes
+        for (int i = 0; i < vertexesSize; i++) {
+            String bIntegerGraphVertexName = bIntegerGraphVertexes.get(i).getName();
+            String deserializedGraphVertexName = bDecimalGraphVertexes.get(i).getName();
+            assertEquals(bIntegerGraphVertexName, deserializedGraphVertexName);
+        }
+
+        List<Edge<BigInteger>> bIntegerGraphEdges = bIntegerGraph.getEdges();
+        List<Edge<BigDecimal>> deserializedGraphEdges = deserializedGraph.getEdges();
+
+        // both graphs have identical edges
+        for (int j = 0; j < edgesSize; j++) {
+            Edge<BigInteger> bIntegerEdge = bIntegerGraphEdges.get(j);
+            Edge<BigDecimal> bDecimalEdge = deserializedGraphEdges.get(j);
+
+            String expectedSourceVertexName = bIntegerEdge.getSource().getName();
+            String receivedSourceVertexName = bDecimalEdge.getSource().getName();
+            assertEquals(expectedSourceVertexName, receivedSourceVertexName);
+
+            String expectedDestinationVertexName = bIntegerEdge.getDestination().getName();
+            String receivedDestinationVertexName = bDecimalEdge.getDestination().getName();
+            assertEquals(expectedDestinationVertexName, receivedDestinationVertexName);
+
+            assertEquals(bIntegerEdge.getWeightAsBigDecimal(), bDecimalEdge.getWeightAsBigDecimal());
         }
     }
 }
