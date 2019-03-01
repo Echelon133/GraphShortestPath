@@ -10,6 +10,7 @@ import ml.echelon133.graph.Edge;
 import ml.echelon133.graph.Graph;
 import ml.echelon133.graph.Vertex;
 import ml.echelon133.graph.WeightedGraph;
+import ml.echelon133.graph.json.exception.*;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -24,15 +25,27 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
     }
 
     private void checkNodeExistence(JsonNode node, String exceptionMessage) throws JsonProcessingException {
+        if (node.isMissingNode()) {
+            throw new MissingNodeException(exceptionMessage);
+        }
     }
 
     private void checkIfNodeIsArray(JsonNode node, String exceptionMessage) throws JsonProcessingException {
+        if (!node.isArray()) {
+            throw new NodeIsNotArrayException(exceptionMessage);
+        }
     }
 
     private void checkIfNodeIsText(JsonNode node, String exceptionMessage) throws JsonProcessingException {
+        if (!node.isTextual()) {
+            throw new NodeIsNotTextualException(exceptionMessage);
+        }
     }
 
     private void checkIfNodeIsObject(JsonNode node, String exceptionMessage) throws JsonProcessingException {
+        if (!node.isObject()) {
+            throw new NodeIsNotObjectException(exceptionMessage);
+        }
     }
 
     @Override
