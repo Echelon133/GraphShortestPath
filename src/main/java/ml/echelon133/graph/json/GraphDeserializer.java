@@ -109,6 +109,11 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
             Vertex<BigDecimal> sourceVertex = vertexHelperMap.get(sourceVertexName);
             Vertex<BigDecimal> destinationVertex = vertexHelperMap.get(destinationVertexName);
 
+            if (sourceVertex == null || destinationVertex == null) {
+                String msg = String.format("Edge '%s' references a vertex that is not present in 'vertexes'", edgeElem.toString());
+                throw new EdgeNullVertexException(msg);
+            }
+
             Edge<BigDecimal> e = new Edge<>(sourceVertex, destinationVertex, weight);
             outputGraph.addEdge(e);
         }
