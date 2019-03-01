@@ -84,9 +84,13 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
         Iterator<JsonNode> edgesIter = edges.elements();
         while (edgesIter.hasNext()) {
             JsonNode edgeElem = edgesIter.next();
+            checkIfNodeIsObject(edgeElem, "Edge element in 'edges' is not an object");
 
             JsonNode sourceVertexElem = edgeElem.get("source");
             JsonNode destinationVertexElem = edgeElem.get("destination");
+
+            checkIfNodeIsText(sourceVertexElem, "Source vertex in Edge is not textual");
+            checkIfNodeIsText(destinationVertexElem, "Destination vertex in Edge is not textual");
 
             String sourceVertexName = sourceVertexElem.textValue();
             String destinationVertexName = destinationVertexElem.textValue();
