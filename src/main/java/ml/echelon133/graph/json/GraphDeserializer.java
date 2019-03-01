@@ -98,6 +98,7 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
 
             checkIfNodeIsText(sourceVertexElem, "Source vertex in Edge is not textual");
             checkIfNodeIsText(destinationVertexElem, "Destination vertex in Edge is not textual");
+            checkIfNodeIsBigDecimal(edgeWeightElem, "Weight cannot be deserialized as BigDecimal");
 
             String sourceVertexName = sourceVertexElem.textValue();
             String destinationVertexName = destinationVertexElem.textValue();
