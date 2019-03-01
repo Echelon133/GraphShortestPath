@@ -61,6 +61,12 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
         JsonNode vertexes = mainNode.get("vertexes");
         JsonNode edges = mainNode.get("edges");
 
+        checkNodeExistence(vertexes, "Missing 'vertexes' JSON node.");
+        checkNodeExistence(edges, "Missing 'edges' JSON node.");
+
+        checkIfNodeIsArray(vertexes, "'vertexes' is not an array node.");
+        checkIfNodeIsArray(edges, "'edges' is not an array node.");
+
         // reconstructing vertexes
         Iterator<JsonNode> vertexIter = vertexes.elements();
         while (vertexIter.hasNext()) {
