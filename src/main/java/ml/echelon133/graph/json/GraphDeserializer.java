@@ -48,6 +48,12 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
         }
     }
 
+    private void checkIfNodeIsBigDecimal(JsonNode node, String exceptionMessage) throws JsonProcessingException {
+        if (!node.isBigDecimal()) {
+            throw new NodeIsNotBigDecimalException(exceptionMessage);
+        }
+    }
+
     @Override
     public Graph<BigDecimal> deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         // we need this helper map to quickly find vertexes by their name (serialized edge refers to the vertex by its name)
@@ -88,13 +94,14 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
 
             JsonNode sourceVertexElem = edgeElem.get("source");
             JsonNode destinationVertexElem = edgeElem.get("destination");
+            JsonNode edgeWeightElem = edgeElem.get("weight");
 
             checkIfNodeIsText(sourceVertexElem, "Source vertex in Edge is not textual");
             checkIfNodeIsText(destinationVertexElem, "Destination vertex in Edge is not textual");
 
             String sourceVertexName = sourceVertexElem.textValue();
             String destinationVertexName = destinationVertexElem.textValue();
-            BigDecimal weight = edgeElem.get("weight").decimalValue();
+            BigDecimal weight = edgeWeightElem.decimalValue();
 
             Vertex<BigDecimal> sourceVertex = vertexHelperMap.get(sourceVertexName);
             Vertex<BigDecimal> destinationVertex = vertexHelperMap.get(destinationVertexName);
