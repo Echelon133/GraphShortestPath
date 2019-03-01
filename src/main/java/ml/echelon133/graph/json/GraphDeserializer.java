@@ -71,6 +71,8 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
         Iterator<JsonNode> vertexIter = vertexes.elements();
         while (vertexIter.hasNext()) {
             JsonNode vertexElem = vertexIter.next();
+            checkIfNodeIsText(vertexElem, "Vertex element in 'vertexes' is not textual");
+
             Vertex<BigDecimal> v = new Vertex<>(vertexElem.textValue());
 
             outputGraph.addVertex(v);
