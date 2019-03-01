@@ -48,9 +48,9 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
         }
     }
 
-    private void checkIfNodeIsBigDecimal(JsonNode node, String exceptionMessage) throws JsonProcessingException {
-        if (!node.isBigDecimal()) {
-            throw new NodeIsNotBigDecimalException(exceptionMessage);
+    private void checkIfNodeIsNumber(JsonNode node, String exceptionMessage) throws JsonProcessingException {
+        if (!node.isNumber()) {
+            throw new NodeIsNotNumberException(exceptionMessage);
         }
     }
 
@@ -98,7 +98,9 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
 
             checkIfNodeIsText(sourceVertexElem, "Source vertex in Edge is not textual");
             checkIfNodeIsText(destinationVertexElem, "Destination vertex in Edge is not textual");
-            checkIfNodeIsBigDecimal(edgeWeightElem, "Weight cannot be deserialized as BigDecimal");
+
+            // if a node can be represented as a number, then BigDecimal representation is also possible
+            checkIfNodeIsNumber(edgeWeightElem, "Weight cannot be deserialized as BigDecimal");
 
             String sourceVertexName = sourceVertexElem.textValue();
             String destinationVertexName = destinationVertexElem.textValue();
