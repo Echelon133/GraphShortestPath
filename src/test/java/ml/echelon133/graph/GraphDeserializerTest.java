@@ -188,4 +188,63 @@ public class GraphDeserializerTest {
 
         assertEquals(expectedMessage, receivedMessage);
     }
+
+    @Test
+    public void edgeObjectSourceVertexNotTextualThrowsNodeIsNotTextualException() {
+        String expectedMessage = "Source vertex in Edge is not textual";
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [{\"source\" : 1010, \"destination\" : \"v2\", \"weight\" : 20}]}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
+
+    @Test
+    public void edgeObjectDestinationVertexNotTextualThrowsNodeIsNotTextualException() {
+        String expectedMessage = "Destination vertex in Edge is not textual";
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [{\"source\" : \"v1\", \"destination\" : 1010, \"weight\" : 20}]}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
+
+    @Test
+    public void edgeObjectVertexWeightNotNumberThrowsNodeIsNotNumberException() {
+        String expectedMessage = "Weight cannot be deserialized as BigDecimal";
+        String receivedMessage = "";
+
+        String json1 = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [{\"source\" : \"v1\", \"destination\" : \"v2\", \"weight\" : \"asdf\"}]}";
+        String json2 = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [{\"source\" : \"v1\", \"destination\" : \"v2\", \"weight\" : {}}]}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json1, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+
+        receivedMessage = "";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json2, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
 }
