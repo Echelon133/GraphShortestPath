@@ -140,4 +140,52 @@ public class GraphDeserializerTest {
 
         assertEquals(expectedMessage, receivedMessage);
     }
+
+    @Test
+    public void edgeObjectMissingSourceVertexThrowsMissingNodeException() {
+        String expectedMessage = "Edge object does not contain 'source' field";
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [{\"destination\" : \"v2\", \"weight\" : 20}]}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
+
+    @Test
+    public void edgeObjectMissingDestinationVertexThrowsMissingNodeException() {
+        String expectedMessage = "Edge object does not contain 'destination' field";
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [{\"source\" : \"v1\", \"weight\" : 20}]}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
+
+    @Test
+    public void edgeObjectMissingWeightThrowsMissingNodeException() {
+        String expectedMessage = "Edge object does not contain 'weight' field";
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [{\"source\" : \"v1\", \"destination\" : \"v2\"}]}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
 }
