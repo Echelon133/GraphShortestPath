@@ -97,4 +97,47 @@ public class GraphDeserializerTest {
 
         assertEquals(expectedMessage, receivedMessage);
     }
+
+    @Test
+    public void vertexElementIncorrectTypeThrowsNodeIsNotTextualException() {
+        String expectedMessage = "Vertex element in 'vertexes' is not textual";
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\": [\"v1\", \"v2\", \"v3\", 4], \"edges\": []}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
+
+    @Test
+    public void edgeElementIncorrectTypeThrowsNodeIsNotObjectException() {
+        String expectedMessage = "Edge element in 'edges' is not an object";
+        String receivedMessage = "";
+
+        String json1 = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [1]}";
+        String json2 = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [\"test\"]}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json1, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+
+        receivedMessage = "";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json2, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
 }
