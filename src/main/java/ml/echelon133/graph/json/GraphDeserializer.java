@@ -24,8 +24,8 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
         super(valueType);
     }
 
-    private void checkNodeExistence(JsonNode node, String exceptionMessage) throws JsonProcessingException {
-        if (node.isMissingNode()) {
+    private void checkIfNodeExists(JsonNode node, String exceptionMessage) throws JsonProcessingException {
+        if (node == null || node.isMissingNode()) {
             throw new MissingNodeException(exceptionMessage);
         }
     }
@@ -67,8 +67,8 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
         JsonNode vertexes = mainNode.get("vertexes");
         JsonNode edges = mainNode.get("edges");
 
-        checkNodeExistence(vertexes, "Missing 'vertexes' JSON node.");
-        checkNodeExistence(edges, "Missing 'edges' JSON node.");
+        checkIfNodeExists(vertexes, "Missing 'vertexes' JSON node.");
+        checkIfNodeExists(edges, "Missing 'edges' JSON node.");
 
         checkIfNodeIsArray(vertexes, "'vertexes' is not an array node.");
         checkIfNodeIsArray(edges, "'edges' is not an array node.");
