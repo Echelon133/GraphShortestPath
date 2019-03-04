@@ -6,8 +6,12 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import ml.echelon133.graph.json.GraphDeserializer;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class GraphDeserializerTest {
@@ -30,5 +34,35 @@ public class GraphDeserializerTest {
         mapper.registerModule(module);
     }
 
+    @Test
+    public void vertexesNodeMissingThrowsMissingNodeException() {
+        String expectedMessage = "Missing 'vertexes' JSON node.";
+        String receivedMessage = "";
 
+        String json = "{\"edges\":[]}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
+
+    @Test
+    public void edgesNodeMissingThrowsMissingNodeException() {
+        String expectedMessage = "Missing 'edges' JSON node.";
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\":[]}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
 }
