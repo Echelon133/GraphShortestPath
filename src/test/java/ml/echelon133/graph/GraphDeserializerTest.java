@@ -65,4 +65,36 @@ public class GraphDeserializerTest {
 
         assertEquals(expectedMessage, receivedMessage);
     }
+
+    @Test
+    public void vertexIncorrectTypeThrowsNodeIsNotArrayException() {
+        String expectedMessage = "'vertexes' is not an array node.";
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\": \"array expected here\", \"edges\": []}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
+
+    @Test
+    public void edgesIncorrectTypeThrowsNodeIsNotArrayException() {
+        String expectedMessage = "'edges' is not an array node.";
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\": [], \"edges\": \"array expected here\"}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
 }
