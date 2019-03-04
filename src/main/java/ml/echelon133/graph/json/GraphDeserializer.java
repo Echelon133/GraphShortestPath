@@ -96,6 +96,10 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
             JsonNode destinationVertexElem = edgeElem.get("destination");
             JsonNode edgeWeightElem = edgeElem.get("weight");
 
+            checkIfNodeExists(sourceVertexElem, "Edge object does not contain 'source' field");
+            checkIfNodeExists(destinationVertexElem, "Edge object does not contain 'destination' field");
+            checkIfNodeExists(edgeWeightElem, "Edge object does not contain 'weight' field");
+
             checkIfNodeIsText(sourceVertexElem, "Source vertex in Edge is not textual");
             checkIfNodeIsText(destinationVertexElem, "Destination vertex in Edge is not textual");
 
