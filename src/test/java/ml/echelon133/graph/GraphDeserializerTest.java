@@ -247,4 +247,22 @@ public class GraphDeserializerTest {
 
         assertEquals(expectedMessage, receivedMessage);
     }
+
+    @Test
+    public void edgeObjectReferringToNotExistingVertexThrowsEdgeNullVertexException() {
+        String receivedMessage = "";
+
+        String edgeContent = "{\"source\":\"v1\",\"destination\":\"v3\",\"weight\":20}";
+        String json = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [" + edgeContent + "]}";
+
+        String expectedMessage = String.format("Edge '%s' references a vertex that is not present in 'vertexes'", edgeContent);
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
 }
