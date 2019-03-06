@@ -35,7 +35,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void vertexesNodeMissingThrowsMissingNodeException() {
+    public void vertexesNodeMissingCausesMissingNodeException() {
         String expectedMessage = "Missing 'vertexes' JSON node.";
         String receivedMessage = "";
 
@@ -51,7 +51,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void edgesNodeMissingThrowsMissingNodeException() {
+    public void edgesNodeMissingCausesMissingNodeException() {
         String expectedMessage = "Missing 'edges' JSON node.";
         String receivedMessage = "";
 
@@ -67,7 +67,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void vertexIncorrectTypeThrowsNodeIsNotArrayException() {
+    public void vertexIncorrectTypeCausesNodeIsNotArrayException() {
         String expectedMessage = "'vertexes' is not an array node.";
         String receivedMessage = "";
 
@@ -83,7 +83,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void edgesIncorrectTypeThrowsNodeIsNotArrayException() {
+    public void edgesIncorrectTypeCausesNodeIsNotArrayException() {
         String expectedMessage = "'edges' is not an array node.";
         String receivedMessage = "";
 
@@ -99,7 +99,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void vertexElementIncorrectTypeThrowsNodeIsNotTextualException() {
+    public void vertexElementIncorrectTypeCausesNodeIsNotTextualException() {
         String expectedMessage = "Vertex element in 'vertexes' is not textual";
         String receivedMessage = "";
 
@@ -115,7 +115,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void edgeElementIncorrectTypeThrowsNodeIsNotObjectException() {
+    public void edgeElementIncorrectTypeCausesNodeIsNotObjectException() {
         String expectedMessage = "Edge element in 'edges' is not an object";
         String receivedMessage = "";
 
@@ -142,7 +142,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void edgeObjectMissingSourceVertexThrowsMissingNodeException() {
+    public void edgeObjectMissingSourceVertexCausesMissingNodeException() {
         String expectedMessage = "Edge object does not contain 'source' field";
         String receivedMessage = "";
 
@@ -158,7 +158,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void edgeObjectMissingDestinationVertexThrowsMissingNodeException() {
+    public void edgeObjectMissingDestinationVertexCausesMissingNodeException() {
         String expectedMessage = "Edge object does not contain 'destination' field";
         String receivedMessage = "";
 
@@ -174,7 +174,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void edgeObjectMissingWeightThrowsMissingNodeException() {
+    public void edgeObjectMissingWeightCausesMissingNodeException() {
         String expectedMessage = "Edge object does not contain 'weight' field";
         String receivedMessage = "";
 
@@ -190,7 +190,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void edgeObjectSourceVertexNotTextualThrowsNodeIsNotTextualException() {
+    public void edgeObjectSourceVertexNotTextualCausesNodeIsNotTextualException() {
         String expectedMessage = "Source vertex in Edge is not textual";
         String receivedMessage = "";
 
@@ -206,7 +206,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void edgeObjectDestinationVertexNotTextualThrowsNodeIsNotTextualException() {
+    public void edgeObjectDestinationVertexNotTextualCausesNodeIsNotTextualException() {
         String expectedMessage = "Destination vertex in Edge is not textual";
         String receivedMessage = "";
 
@@ -222,7 +222,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void edgeObjectVertexWeightNotNumberThrowsNodeIsNotNumberException() {
+    public void edgeObjectVertexWeightNotNumberCausesNodeIsNotNumberException() {
         String expectedMessage = "Weight cannot be deserialized as BigDecimal";
         String receivedMessage = "";
 
@@ -249,7 +249,7 @@ public class GraphDeserializerTest {
     }
 
     @Test
-    public void edgeObjectReferringToNotExistingVertexThrowsEdgeNullVertexException() {
+    public void edgeObjectReferringToNotExistingVertexCausesEdgeNullVertexException() {
         String receivedMessage = "";
 
         String edgeContent = "{\"source\":\"v1\",\"destination\":\"v3\",\"weight\":20}";
