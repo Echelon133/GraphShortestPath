@@ -7,29 +7,11 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
     private List<Vertex<T>> vertexes;
     private Map<String, Vertex<T>> vertexHelperMap;
     private List<Edge<T>> edges;
-    private boolean enableVertexSearchPerformance;
 
     public WeightedGraph() {
         vertexes = new ArrayList<>();
         edges = new ArrayList<>();
-    }
-
-    public WeightedGraph(Boolean enableVertexSearchPerformance) {
-        this();
-        this.enableVertexSearchPerformance = enableVertexSearchPerformance;
-    }
-
-    private void initVertexHelperMapIfNeeded() {
-        // if our graph contains more than 200 vertexes, instantiate a map that helps with
-        // changing linear time vertex search to constant time search (but using more memory)
-        if (vertexes.size() > 200 && vertexHelperMap == null) {
-            vertexHelperMap = new HashMap<>();
-
-            // this will be performed only once, when size passes the threshold
-            for (Vertex<T> v : vertexes) {
-                vertexHelperMap.put(v.getName(), v);
-            }
-        }
+        vertexHelperMap = new HashMap<>();
     }
 
     @Override
@@ -44,24 +26,10 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
 
     @Override
     public void addVertex(Vertex<T> v) throws IllegalArgumentException {
-        if (enableVertexSearchPerformance) {
-            initVertexHelperMapIfNeeded();
-        }
 
-        boolean isVertexInGraph;
-
-        // when vertexHelperMap is null, it means that only linear search is available to us
-        // otherwise we can use our map to find vertexes by name in constant time
-        if (vertexHelperMap != null) {
-            isVertexInGraph = vertexHelperMap.containsKey(v.getName());
-        } else {
-            Optional<Vertex<T>> nameVertex = vertexes.stream().filter(vert -> vert.getName().equals(v.getName())).findFirst();
-            isVertexInGraph = nameVertex.isPresent();
-        }
-
-        if (!isVertexInGraph && vertexHelperMap == null) {
-            vertexes.add(v);
-        } else if (!isVertexInGraph) {
+        // vertexHelperMap is used internally to make lookup of vertexes faster
+        // outside objects have only access to graph vertexes through getVertexes()
+        if (!vertexHelperMap.containsKey(v.getName())) {
             vertexes.add(v);
             vertexHelperMap.put(v.getName(), v);
         } else {
@@ -75,10 +43,7 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
         this.edges.removeIf(edge -> edge.isVertexInEdge(v));
 
         vertexes.remove(v);
-
-        if (vertexHelperMap != null) {
-            vertexHelperMap.remove(v.getName());
-        }
+        vertexHelperMap.remove(v.getName());
     }
 
     @Override
