@@ -47,7 +47,12 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
     }
 
     @Override
-    public void addEdge(Edge<T> e) {
+    public void addEdge(Edge<T> e) throws IllegalArgumentException {
+
+        if (!vertexHelperMap.containsKey(e.getSource().getName()) || !vertexHelperMap.containsKey(e.getDestination().getName())) {
+            throw new IllegalArgumentException("Edge contains a vertex that does not belong to the graph");
+        }
+
         // WeightedGraph needs to have a reference to every edge in the graph
         edges.add(e);
 
@@ -61,11 +66,8 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
     public void addEdge(Vertex<T> source, Vertex<T> destination, T weight) throws IllegalArgumentException {
         Edge<T> e = new Edge<>(source, destination, weight);
 
-        // WeightedGraph needs to have a reference to every edge in the graph
-        edges.add(e);
-        // The actual shortest path algorithm takes info about nearest vertexes from the source vertex.
-        // Without the line below our algorithm will not 'see' any edges.
-        source.addEdge(e);
+        // use addEdge(Edge<T>) for simplicity
+        this.addEdge(e);
     }
 
     @Override
