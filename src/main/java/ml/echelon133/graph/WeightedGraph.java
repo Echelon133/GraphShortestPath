@@ -1,17 +1,17 @@
 package ml.echelon133.graph;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T> {
 
     private List<Vertex<T>> vertexes;
+    private Map<String, Vertex<T>> vertexHelperMap;
     private List<Edge<T>> edges;
 
     public WeightedGraph() {
         vertexes = new ArrayList<>();
         edges = new ArrayList<>();
+        vertexHelperMap = new HashMap<>();
     }
 
     @Override
@@ -26,10 +26,12 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
 
     @Override
     public void addVertex(Vertex<T> v) throws IllegalArgumentException {
-        Optional<Vertex<T>> nameVertex = vertexes.stream().filter(vert -> vert.getName().equals(v.getName())).findFirst();
 
-        if (!nameVertex.isPresent()) {
+        // vertexHelperMap is used internally to make lookup of vertexes faster
+        // outside objects have only access to graph vertexes through getVertexes()
+        if (!vertexHelperMap.containsKey(v.getName())) {
             vertexes.add(v);
+            vertexHelperMap.put(v.getName(), v);
         } else {
             throw new IllegalArgumentException("Vertex with that name already belongs to this graph");
         }
@@ -41,6 +43,7 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
         this.edges.removeIf(edge -> edge.isVertexInEdge(v));
 
         vertexes.remove(v);
+        vertexHelperMap.remove(v.getName());
     }
 
     @Override
