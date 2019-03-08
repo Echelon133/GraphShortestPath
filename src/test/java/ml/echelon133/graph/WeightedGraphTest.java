@@ -69,6 +69,39 @@ public class WeightedGraphTest {
     }
 
     @Test
+    public void addingAnEdgeThatContainsVertexNotBelongingToGraphThrowsException() {
+        String expectedMsg = "Edge contains a vertex that does not belong to the graph";
+        String receivedMsg = "";
+
+        Vertex<Long> v1 = new Vertex<>("v1");
+        Vertex<Long> v2 = new Vertex<>("v2");
+
+        testGraph.addVertex(v1);
+        testGraph.addEdge(v1, v1, 50L); // valid addEdge - v1 belongs to the graph
+
+        // CHECK void addEdge(Vertex<T>, Vertex<T>, T)
+        try {
+            testGraph.addEdge(v1, v2, 50L);
+        } catch (IllegalArgumentException ex) {
+            receivedMsg = ex.getMessage();
+        }
+
+        assertEquals(expectedMsg, receivedMsg);
+
+        receivedMsg = "";
+
+        // CHECK void addEdge(Edge<T>)
+        try {
+            Edge<Long> e = new Edge<>(v1, v2, 50L);
+            testGraph.addEdge(e);
+        } catch (IllegalArgumentException ex) {
+            receivedMsg = ex.getMessage();
+        }
+
+        assertEquals(expectedMsg, receivedMsg);
+    }
+
+    @Test
     public void addingAndRemovingEdgesWorks() {
         Vertex<Long> v1 = new Vertex<>("v1");
         Vertex<Long> v2 = new Vertex<>("v2");
