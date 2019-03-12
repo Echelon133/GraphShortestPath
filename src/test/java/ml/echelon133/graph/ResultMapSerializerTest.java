@@ -10,6 +10,7 @@ import ml.echelon133.graph.json.VertexSerializer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -308,6 +309,53 @@ public class ResultMapSerializerTest {
 
             // Check pathToVertex elements (their order and values)
             LinkedList<Vertex<Double>> vPath = vResult.getPathToVertex();
+            // get elements by their indexes to make sure that the order remains the same after serialization
+            for (int i = 0; i < vPath.size(); i++) {
+                String expectedVertexName = vPath.get(i).getName();
+                String serializedVertexName = nodePathToVertex.get(i).asText();
+
+                assertEquals(expectedVertexName, serializedVertexName);
+            }
+        }
+    }
+
+    @Test
+    public void serializeBigIntegerGraphResultMap() throws Exception {
+        Graph<BigInteger> bigIntGraph = TestGraphStore.getBigIntegerTestGraph();
+
+        Vertex<BigInteger> startVertex = bigIntGraph
+                .getVertexes().stream().filter(v -> v.getName().equals("bigIntVertex1")).findFirst().get();
+
+        ShortestPathSolver<BigInteger> sps = new ShortestPathSolver<>(bigIntGraph);
+        Map<Vertex<BigInteger>, VertexResult<BigInteger>> resultMap = sps.solveStartingFrom(startVertex);
+
+        String serializedResultMap = mapper.writeValueAsString(resultMap);
+
+        JsonNode mainNode = mapper.readTree(serializedResultMap);
+        JsonNode results = mainNode.get("results");
+
+        // Compare each VertexResult's values with serialized values
+        for (Map.Entry<Vertex<BigInteger>, VertexResult<BigInteger>> v : resultMap.entrySet()) {
+            VertexResult<BigInteger> vResult = v.getValue();
+            JsonNode vertexObj = results.findValue(v.getKey().getName());
+
+            JsonNode nodePreviousVertex = vertexObj.get("previousVertex");
+            JsonNode nodeSumOfWeights = vertexObj.get("sumOfWeights");
+            JsonNode nodePathToVertex = vertexObj.get("pathToVertex");
+
+            // Check previousVertex name
+            try {
+                assertEquals(vResult.getPreviousVertex().getName(), nodePreviousVertex.asText());
+            } catch (NullPointerException ex) {
+                // if vResult.getPreviousVertex() is null, then check whether serialized field is also null
+                assertTrue(nodePreviousVertex.isNull());
+            }
+
+            // Check sumOfWeights value
+            assertEquals(vResult.getSumOfWeights(), nodeSumOfWeights.decimalValue());
+
+            // Check pathToVertex elements (their order and values)
+            LinkedList<Vertex<BigInteger>> vPath = vResult.getPathToVertex();
             // get elements by their indexes to make sure that the order remains the same after serialization
             for (int i = 0; i < vPath.size(); i++) {
                 String expectedVertexName = vPath.get(i).getName();
