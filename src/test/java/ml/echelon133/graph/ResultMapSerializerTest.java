@@ -10,6 +10,7 @@ import ml.echelon133.graph.json.VertexSerializer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.Map;
@@ -356,6 +357,53 @@ public class ResultMapSerializerTest {
 
             // Check pathToVertex elements (their order and values)
             LinkedList<Vertex<BigInteger>> vPath = vResult.getPathToVertex();
+            // get elements by their indexes to make sure that the order remains the same after serialization
+            for (int i = 0; i < vPath.size(); i++) {
+                String expectedVertexName = vPath.get(i).getName();
+                String serializedVertexName = nodePathToVertex.get(i).asText();
+
+                assertEquals(expectedVertexName, serializedVertexName);
+            }
+        }
+    }
+
+    @Test
+    public void serializeBigDecimalGraphResultMap() throws Exception {
+        Graph<BigDecimal> bigDecGraph = TestGraphStore.getBigDecimalTestGraph();
+
+        Vertex<BigDecimal> startVertex = bigDecGraph
+                .getVertexes().stream().filter(v -> v.getName().equals("bigDecVertex1")).findFirst().get();
+
+        ShortestPathSolver<BigDecimal> sps = new ShortestPathSolver<>(bigDecGraph);
+        Map<Vertex<BigDecimal>, VertexResult<BigDecimal>> resultMap = sps.solveStartingFrom(startVertex);
+
+        String serializedResultMap = mapper.writeValueAsString(resultMap);
+
+        JsonNode mainNode = mapper.readTree(serializedResultMap);
+        JsonNode results = mainNode.get("results");
+
+        // Compare each VertexResult's values with serialized values
+        for (Map.Entry<Vertex<BigDecimal>, VertexResult<BigDecimal>> v : resultMap.entrySet()) {
+            VertexResult<BigDecimal> vResult = v.getValue();
+            JsonNode vertexObj = results.findValue(v.getKey().getName());
+
+            JsonNode nodePreviousVertex = vertexObj.get("previousVertex");
+            JsonNode nodeSumOfWeights = vertexObj.get("sumOfWeights");
+            JsonNode nodePathToVertex = vertexObj.get("pathToVertex");
+
+            // Check previousVertex name
+            try {
+                assertEquals(vResult.getPreviousVertex().getName(), nodePreviousVertex.asText());
+            } catch (NullPointerException ex) {
+                // if vResult.getPreviousVertex() is null, then check whether serialized field is also null
+                assertTrue(nodePreviousVertex.isNull());
+            }
+
+            // Check sumOfWeights value (compare as double, because e.g. BigDecimal 0.10 and 0.1 are considered not equal)
+            assertEquals(vResult.getSumOfWeights().doubleValue(), nodeSumOfWeights.doubleValue());
+
+            // Check pathToVertex elements (their order and values)
+            LinkedList<Vertex<BigDecimal>> vPath = vResult.getPathToVertex();
             // get elements by their indexes to make sure that the order remains the same after serialization
             for (int i = 0; i < vPath.size(); i++) {
                 String expectedVertexName = vPath.get(i).getName();
