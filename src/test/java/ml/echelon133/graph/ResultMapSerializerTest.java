@@ -129,4 +129,51 @@ public class ResultMapSerializerTest {
             }
         }
     }
+
+    @Test
+    public void serializeIntegerGraphResultMap() throws Exception {
+        Graph<Integer> intGraph = TestGraphStore.getIntegerTestGraph();
+
+        Vertex<Integer> startVertex = intGraph
+                .getVertexes().stream().filter(v -> v.getName().equals("intVertex1")).findFirst().get();
+
+        ShortestPathSolver<Integer> sps = new ShortestPathSolver<>(intGraph);
+        Map<Vertex<Integer>, VertexResult<Integer>> resultMap = sps.solveStartingFrom(startVertex);
+
+        String serializedResultMap = mapper.writeValueAsString(resultMap);
+
+        JsonNode mainNode = mapper.readTree(serializedResultMap);
+        JsonNode results = mainNode.get("results");
+
+        // Compare each VertexResult's values with serialized values
+        for (Map.Entry<Vertex<Integer>, VertexResult<Integer>> v : resultMap.entrySet()) {
+            VertexResult<Integer> vResult = v.getValue();
+            JsonNode vertexObj = results.findValue(v.getKey().getName());
+
+            JsonNode nodePreviousVertex = vertexObj.get("previousVertex");
+            JsonNode nodeSumOfWeights = vertexObj.get("sumOfWeights");
+            JsonNode nodePathToVertex = vertexObj.get("pathToVertex");
+
+            // Check previousVertex name
+            try {
+                assertEquals(vResult.getPreviousVertex().getName(), nodePreviousVertex.asText());
+            } catch (NullPointerException ex) {
+                // if vResult.getPreviousVertex() is null, then check whether serialized field is also null
+                assertTrue(nodePreviousVertex.isNull());
+            }
+
+            // Check sumOfWeights value
+            assertEquals(vResult.getSumOfWeights(), nodeSumOfWeights.decimalValue());
+
+            // Check pathToVertex elements (their order and values)
+            LinkedList<Vertex<Integer>> vPath = vResult.getPathToVertex();
+            // get elements by their indexes to make sure that the order remains the same after serialization
+            for (int i = 0; i < vPath.size(); i++) {
+                String expectedVertexName = vPath.get(i).getName();
+                String serializedVertexName = nodePathToVertex.get(i).asText();
+
+                assertEquals(expectedVertexName, serializedVertexName);
+            }
+        }
+    }
 }
