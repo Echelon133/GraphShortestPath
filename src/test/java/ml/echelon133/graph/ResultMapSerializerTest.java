@@ -223,4 +223,51 @@ public class ResultMapSerializerTest {
             }
         }
     }
+
+    @Test
+    public void serializeFloatGraphResultMap() throws Exception {
+        Graph<Float> floatGraph = TestGraphStore.getFloatTestGraph();
+
+        Vertex<Float> startVertex = floatGraph
+                .getVertexes().stream().filter(v -> v.getName().equals("floatVertex1")).findFirst().get();
+
+        ShortestPathSolver<Float> sps = new ShortestPathSolver<>(floatGraph);
+        Map<Vertex<Float>, VertexResult<Float>> resultMap = sps.solveStartingFrom(startVertex);
+
+        String serializedResultMap = mapper.writeValueAsString(resultMap);
+
+        JsonNode mainNode = mapper.readTree(serializedResultMap);
+        JsonNode results = mainNode.get("results");
+
+        // Compare each VertexResult's values with serialized values
+        for (Map.Entry<Vertex<Float>, VertexResult<Float>> v : resultMap.entrySet()) {
+            VertexResult<Float> vResult = v.getValue();
+            JsonNode vertexObj = results.findValue(v.getKey().getName());
+
+            JsonNode nodePreviousVertex = vertexObj.get("previousVertex");
+            JsonNode nodeSumOfWeights = vertexObj.get("sumOfWeights");
+            JsonNode nodePathToVertex = vertexObj.get("pathToVertex");
+
+            // Check previousVertex name
+            try {
+                assertEquals(vResult.getPreviousVertex().getName(), nodePreviousVertex.asText());
+            } catch (NullPointerException ex) {
+                // if vResult.getPreviousVertex() is null, then check whether serialized field is also null
+                assertTrue(nodePreviousVertex.isNull());
+            }
+
+            // Check sumOfWeights value (compare as floats, because of the precision loss)
+            assertEquals(vResult.getSumOfWeights().floatValue(), nodeSumOfWeights.floatValue());
+
+            // Check pathToVertex elements (their order and values)
+            LinkedList<Vertex<Float>> vPath = vResult.getPathToVertex();
+            // get elements by their indexes to make sure that the order remains the same after serialization
+            for (int i = 0; i < vPath.size(); i++) {
+                String expectedVertexName = vPath.get(i).getName();
+                String serializedVertexName = nodePathToVertex.get(i).asText();
+
+                assertEquals(expectedVertexName, serializedVertexName);
+            }
+        }
+    }
 }
