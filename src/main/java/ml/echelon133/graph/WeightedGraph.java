@@ -77,4 +77,9 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
         Vertex<T> source = e.getSource();
         source.removeEdge(e);
     }
+
+    @Override
+    public Vertex<T> findVertex(String vName) {
+        return vertexHelperMap.get(vName);
+    }
 }
