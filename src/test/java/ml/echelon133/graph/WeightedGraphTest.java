@@ -189,4 +189,20 @@ public class WeightedGraphTest {
         assertFalse(graph.getEdges().contains(e4));
         assertFalse(graph.getEdges().contains(e6));
     }
+
+    @Test
+    public void findVertexWorks() {
+        Graph<Integer> graph = new WeightedGraph<>();
+
+        Vertex<Integer> v1 = new Vertex<>("v1");
+        Vertex<Integer> v2 = new Vertex<>("v2");
+
+        graph.addVertex(v1);
+
+        Vertex<Integer> foundV1 = graph.findVertex("v1");
+        Vertex<Integer> foundV2 = graph.findVertex("v2");
+
+        assertEquals(v1, foundV1);
+        assertNull(foundV2);
+    }
 }
