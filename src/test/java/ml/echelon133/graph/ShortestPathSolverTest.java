@@ -32,8 +32,7 @@ public class ShortestPathSolverTest {
         Graph<Byte> byteGraph = TestGraphStore.getByteTestGraph();
         ShortestPathSolver<Byte> sps = new ShortestPathSolver<>(byteGraph);
 
-        Vertex<Byte> startVertex = byteGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("byteVertex1")).findFirst().get();
+        Vertex<Byte> startVertex = byteGraph.findVertex("byteVertex1");
 
         Map<Vertex<Byte>, VertexResult<Byte>> resultMap = sps.solveStartingFrom(startVertex);
 
@@ -86,8 +85,7 @@ public class ShortestPathSolverTest {
         Graph<Short> shortGraph = TestGraphStore.getShortTestGraph();
         ShortestPathSolver<Short> sps = new ShortestPathSolver<>(shortGraph);
 
-        Vertex<Short> startVertex = shortGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("shortVertex1")).findFirst().get();
+        Vertex<Short> startVertex = shortGraph.findVertex("shortVertex1");
 
         Map<Vertex<Short>, VertexResult<Short>> resultMap = sps.solveStartingFrom(startVertex);
 
@@ -139,8 +137,7 @@ public class ShortestPathSolverTest {
         Graph<Integer> intGraph = TestGraphStore.getIntegerTestGraph();
         ShortestPathSolver<Integer> sps = new ShortestPathSolver<>(intGraph);
 
-        Vertex<Integer> startVertex = intGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("intVertex1")).findFirst().get();
+        Vertex<Integer> startVertex = intGraph.findVertex("intVertex1");
 
         Map<Vertex<Integer>, VertexResult<Integer>> resultMap = sps.solveStartingFrom(startVertex);
 
@@ -198,8 +195,7 @@ public class ShortestPathSolverTest {
         Graph<Long> longGraph = TestGraphStore.getLongTestGraph();
         ShortestPathSolver<Long> sps = new ShortestPathSolver<>(longGraph);
 
-        Vertex<Long> startVertex = longGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("longVertex1")).findFirst().get();
+        Vertex<Long> startVertex = longGraph.findVertex("longVertex1");
 
         Map<Vertex<Long>, VertexResult<Long>> resultMap = sps.solveStartingFrom(startVertex);
 
@@ -257,8 +253,7 @@ public class ShortestPathSolverTest {
         Graph<Float> floatGraph = TestGraphStore.getFloatTestGraph();
         ShortestPathSolver<Float> sps = new ShortestPathSolver<>(floatGraph);
 
-        Vertex<Float> startVertex = floatGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("floatVertex1")).findFirst().get();
+        Vertex<Float> startVertex = floatGraph.findVertex("floatVertex1");
 
         Map<Vertex<Float>, VertexResult<Float>> resultMap = sps.solveStartingFrom(startVertex);
 
@@ -319,8 +314,7 @@ public class ShortestPathSolverTest {
         Graph<Double> doubleGraph = TestGraphStore.getDoubleTestGraph();
         ShortestPathSolver<Double> sps = new ShortestPathSolver<>(doubleGraph);
 
-        Vertex<Double> startVertex = doubleGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("doubleVertex1")).findFirst().get();
+        Vertex<Double> startVertex = doubleGraph.findVertex("doubleVertex1");
 
         Map<Vertex<Double>, VertexResult<Double>> resultMap = sps.solveStartingFrom(startVertex);
 
@@ -375,8 +369,7 @@ public class ShortestPathSolverTest {
         Graph<BigInteger> bigIntGraph = TestGraphStore.getBigIntegerTestGraph();
         ShortestPathSolver<BigInteger> sps = new ShortestPathSolver<>(bigIntGraph);
 
-        Vertex<BigInteger> startVertex = bigIntGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("bigIntVertex1")).findFirst().get();
+        Vertex<BigInteger> startVertex = bigIntGraph.findVertex("bigIntVertex1");
 
         Map<Vertex<BigInteger>, VertexResult<BigInteger>> resultMap = sps.solveStartingFrom(startVertex);
 
@@ -434,8 +427,7 @@ public class ShortestPathSolverTest {
         Graph<BigDecimal> bigDecGraph = TestGraphStore.getBigDecimalTestGraph();
         ShortestPathSolver<BigDecimal> sps = new ShortestPathSolver<>(bigDecGraph);
 
-        Vertex<BigDecimal> startVertex = bigDecGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("bigDecVertex1")).findFirst().get();
+        Vertex<BigDecimal> startVertex = bigDecGraph.findVertex("bigDecVertex1");
 
         Map<Vertex<BigDecimal>, VertexResult<BigDecimal>> resultMap = sps.solveStartingFrom(startVertex);
 
