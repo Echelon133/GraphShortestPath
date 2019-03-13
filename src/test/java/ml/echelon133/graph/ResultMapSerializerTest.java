@@ -42,8 +42,7 @@ public class ResultMapSerializerTest {
     public void serializeByteGraphResultMap() throws Exception {
         Graph<Byte> byteGraph = TestGraphStore.getByteTestGraph();
 
-        Vertex<Byte> startVertex = byteGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("byteVertex1")).findFirst().get();
+        Vertex<Byte> startVertex = byteGraph.findVertex("byteVertex1");
 
         ShortestPathSolver<Byte> sps = new ShortestPathSolver<>(byteGraph);
         Map<Vertex<Byte>, VertexResult<Byte>> resultMap = sps.solveStartingFrom(startVertex);
@@ -89,8 +88,7 @@ public class ResultMapSerializerTest {
     public void serializeShortGraphResultMap() throws Exception {
         Graph<Short> shortGraph = TestGraphStore.getShortTestGraph();
 
-        Vertex<Short> startVertex = shortGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("shortVertex1")).findFirst().get();
+        Vertex<Short> startVertex = shortGraph.findVertex("shortVertex1");
 
         ShortestPathSolver<Short> sps = new ShortestPathSolver<>(shortGraph);
         Map<Vertex<Short>, VertexResult<Short>> resultMap = sps.solveStartingFrom(startVertex);
@@ -136,8 +134,7 @@ public class ResultMapSerializerTest {
     public void serializeIntegerGraphResultMap() throws Exception {
         Graph<Integer> intGraph = TestGraphStore.getIntegerTestGraph();
 
-        Vertex<Integer> startVertex = intGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("intVertex1")).findFirst().get();
+        Vertex<Integer> startVertex = intGraph.findVertex("intVertex1");
 
         ShortestPathSolver<Integer> sps = new ShortestPathSolver<>(intGraph);
         Map<Vertex<Integer>, VertexResult<Integer>> resultMap = sps.solveStartingFrom(startVertex);
@@ -183,8 +180,7 @@ public class ResultMapSerializerTest {
     public void serializeLongGraphResultMap() throws Exception {
         Graph<Long> longGraph = TestGraphStore.getLongTestGraph();
 
-        Vertex<Long> startVertex = longGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("longVertex1")).findFirst().get();
+        Vertex<Long> startVertex = longGraph.findVertex("longVertex1");
 
         ShortestPathSolver<Long> sps = new ShortestPathSolver<>(longGraph);
         Map<Vertex<Long>, VertexResult<Long>> resultMap = sps.solveStartingFrom(startVertex);
@@ -230,8 +226,7 @@ public class ResultMapSerializerTest {
     public void serializeFloatGraphResultMap() throws Exception {
         Graph<Float> floatGraph = TestGraphStore.getFloatTestGraph();
 
-        Vertex<Float> startVertex = floatGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("floatVertex1")).findFirst().get();
+        Vertex<Float> startVertex = floatGraph.findVertex("floatVertex1");
 
         ShortestPathSolver<Float> sps = new ShortestPathSolver<>(floatGraph);
         Map<Vertex<Float>, VertexResult<Float>> resultMap = sps.solveStartingFrom(startVertex);
@@ -277,8 +272,7 @@ public class ResultMapSerializerTest {
     public void serializeDoubleGraphResultMap() throws Exception {
         Graph<Double> doubleGraph = TestGraphStore.getDoubleTestGraph();
 
-        Vertex<Double> startVertex = doubleGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("doubleVertex1")).findFirst().get();
+        Vertex<Double> startVertex = doubleGraph.findVertex("doubleVertex1");
 
         ShortestPathSolver<Double> sps = new ShortestPathSolver<>(doubleGraph);
         Map<Vertex<Double>, VertexResult<Double>> resultMap = sps.solveStartingFrom(startVertex);
@@ -324,8 +318,7 @@ public class ResultMapSerializerTest {
     public void serializeBigIntegerGraphResultMap() throws Exception {
         Graph<BigInteger> bigIntGraph = TestGraphStore.getBigIntegerTestGraph();
 
-        Vertex<BigInteger> startVertex = bigIntGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("bigIntVertex1")).findFirst().get();
+        Vertex<BigInteger> startVertex = bigIntGraph.findVertex("bigIntVertex1");
 
         ShortestPathSolver<BigInteger> sps = new ShortestPathSolver<>(bigIntGraph);
         Map<Vertex<BigInteger>, VertexResult<BigInteger>> resultMap = sps.solveStartingFrom(startVertex);
@@ -371,8 +364,7 @@ public class ResultMapSerializerTest {
     public void serializeBigDecimalGraphResultMap() throws Exception {
         Graph<BigDecimal> bigDecGraph = TestGraphStore.getBigDecimalTestGraph();
 
-        Vertex<BigDecimal> startVertex = bigDecGraph
-                .getVertexes().stream().filter(v -> v.getName().equals("bigDecVertex1")).findFirst().get();
+        Vertex<BigDecimal> startVertex = bigDecGraph.findVertex("bigDecVertex1");
 
         ShortestPathSolver<BigDecimal> sps = new ShortestPathSolver<>(bigDecGraph);
         Map<Vertex<BigDecimal>, VertexResult<BigDecimal>> resultMap = sps.solveStartingFrom(startVertex);
