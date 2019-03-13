@@ -11,4 +11,5 @@ public interface Graph<T extends Number & Comparable<T>> {
     void addEdge(Edge<T> e) throws IllegalArgumentException;
     void addEdge(Vertex<T> source, Vertex<T> destination, T weight) throws IllegalArgumentException;
     void removeEdge(Edge<T> e);
+    Vertex<T> findVertex(String vName);
 }
