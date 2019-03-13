@@ -205,4 +205,30 @@ public class WeightedGraphTest {
         assertEquals(v1, foundV1);
         assertNull(foundV2);
     }
+
+    @Test
+    public void findVertexReturnsNullOnRemovedVertexes() {
+        Graph<Integer> graph = new WeightedGraph<>();
+
+        Vertex<Integer> v1 = new Vertex<>("v1");
+        Vertex<Integer> v2 = new Vertex<>("v2");
+
+        graph.addVertex(v1);
+        graph.addVertex(v2);
+
+        Vertex<Integer> foundV1 = graph.findVertex("v1");
+        Vertex<Integer> foundV2 = graph.findVertex("v2");
+
+        assertEquals(v1, foundV1);
+        assertEquals(v2, foundV2);
+
+        graph.removeVertex(v1);
+        graph.removeVertex(v2);
+
+        foundV1 = graph.findVertex("v1");
+        foundV2 = graph.findVertex("v2");
+
+        assertNull(foundV1);
+        assertNull(foundV2);
+    }
 }
