@@ -9,13 +9,13 @@ import java.util.List;
 public interface Graph<T extends Number & Comparable<T>> {
 
     /**
-     * A getter method that returns a list of all vertexes that belong to the graph
+     * A getter method that returns a list of all vertexes that belong to the graph.
      * @return The list of all vertexes
      */
     List<Vertex<T>> getVertexes();
 
     /**
-     * A getter method that returns a list of all edges that belong to the graph
+     * A getter method that returns a list of all edges that belong to the graph.
      * @return The list of all edges
      */
     List<Edge<T>> getEdges();
@@ -43,7 +43,7 @@ public interface Graph<T extends Number & Comparable<T>> {
     void addEdge(Edge<T> e) throws IllegalArgumentException;
 
     /**
-     * A method that constructs a new edge from parameters passed in and adds it to the graph
+     * A method that constructs a new edge from parameters passed in and adds it to the graph.
      * @param source The source vertex of the edge
      * @param destination The destination vertex of the edge
      * @param weight The weight value of the new edge
@@ -52,13 +52,13 @@ public interface Graph<T extends Number & Comparable<T>> {
     void addEdge(Vertex<T> source, Vertex<T> destination, T weight) throws IllegalArgumentException;
 
     /**
-     * A method that removes the edge from the graph
+     * A method that removes the edge from the graph.
      * @param e The edge to remove
      */
     void removeEdge(Edge<T> e);
 
     /**
-     * A method that does quick vertex lookup in the graph based on the vertex name
+     * A method that does quick vertex lookup in the graph based on the vertex name.
      * @param vName The name of the vertex to find
      * @return The found vertex or null value if searched vertex not found
      */
