@@ -60,7 +60,7 @@ public interface Graph<T extends Number & Comparable<T>> {
     /**
      * A method that does quick vertex lookup in the graph based on the vertex name.
      * @param vName The name of the vertex to find
-     * @return The found vertex or null value if searched vertex not found
+     * @return The found vertex or {@code null} value if searched vertex not found
      */
     Vertex<T> findVertex(String vName);
 }

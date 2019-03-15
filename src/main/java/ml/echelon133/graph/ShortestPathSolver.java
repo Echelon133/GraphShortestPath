@@ -40,7 +40,7 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
      * An internal helper method that creates entries in the resultMap for vertexes
      * that were processed by the {@link #solveStartingFrom(Vertex)} method.
      * @param v vertex that might not have an entry in the resultMap
-     * @param startVertex set to <code>true</code> if we start our shortest path algorithm from this vertex
+     * @param startVertex set to {@code true} if we start our shortest path algorithm from this vertex
      */
     private void putVertexInResultMapIfNotContains(Vertex<T> v, boolean startVertex) {
         if (!resultMap.containsKey(v)) {

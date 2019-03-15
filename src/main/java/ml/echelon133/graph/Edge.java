@@ -34,7 +34,7 @@ public class Edge<T extends Number & Comparable<T>> {
     /**
      * A method that checks whether the given vertex is either a source vertex or a destination vertex in this edge.
      * @param v The vertex to check
-     * @return <code>true</code> if the edge source or destination is equal to v, <code>false</code> otherwise
+     * @return {@code true} if the edge source or destination is equal to v, {@code false} otherwise
      */
     public Boolean isVertexInEdge(Vertex<T> v) {
         return (v.equals(source) || v.equals(destination));
@@ -52,8 +52,8 @@ public class Edge<T extends Number & Comparable<T>> {
         return weight;
     }
 
-    /** A method that returns this edge value in {@link java.math.BigDecimal} representation.
-     * @return {@link java.math.BigDecimal} with a value that is equal to the weight value of this edge
+    /** A method that returns this edge value in {@code BigDecimal} representation.
+     * @return {@code BigDecimal} with a value that is equal to this edge {@link #getWeight()}
      */
     public BigDecimal getWeightAsBigDecimal() {
         BigDecimal retWeight;
