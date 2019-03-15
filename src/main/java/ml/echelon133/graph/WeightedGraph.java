@@ -2,6 +2,10 @@ package ml.echelon133.graph;
 
 import java.util.*;
 
+/**
+ * Implementation of {@link Graph} interface. This class represents a graph that has weighted edges.
+ * @param <T>
+ */
 public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T> {
 
     private List<Vertex<T>> vertexes;
