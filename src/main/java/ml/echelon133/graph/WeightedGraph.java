@@ -4,7 +4,7 @@ import java.util.*;
 
 /**
  * Implementation of {@link Graph} interface. This class represents a graph that has weighted edges.
- * @param <T>
+ * @param <T> type of the value that represents weights of edges in the graph
  */
 public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T> {
 
@@ -32,7 +32,7 @@ public class WeightedGraph<T extends Number & Comparable<T>> implements Graph<T>
     public void addVertex(Vertex<T> v) throws IllegalArgumentException {
 
         // vertexHelperMap is used internally to make lookup of vertexes faster
-        // outside objects have only access to graph vertexes through getVertexes()
+        // external objects can only access graph's vertexes through getVertexes()
         if (!vertexHelperMap.containsKey(v.getName())) {
             vertexes.add(v);
             vertexHelperMap.put(v.getName(), v);
