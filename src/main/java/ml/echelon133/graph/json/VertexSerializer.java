@@ -8,6 +8,9 @@ import ml.echelon133.graph.Vertex;
 
 import java.io.IOException;
 
+/**
+ * Serializer of {@link Vertex} objects.
+ */
 public class VertexSerializer extends StdSerializer<Vertex<?>> {
 
     public VertexSerializer(JavaType type) {

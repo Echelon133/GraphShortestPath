@@ -11,6 +11,10 @@ import ml.echelon133.graph.VertexResult;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Serializer of the result {@link Map} that is returned by
+ * {@link ml.echelon133.graph.ShortestPathSolver#solveStartingFrom(Vertex)} method.
+ */
 public class ResultMapSerializer extends StdSerializer<Map<Vertex<?>, VertexResult<?>>> {
 
     public ResultMapSerializer(JavaType type) {
