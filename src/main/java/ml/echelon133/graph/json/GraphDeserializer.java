@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * Deserializer of {@link Graph} objects.
+ */
 public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
 
     public GraphDeserializer(JavaType valueType) {

@@ -3,6 +3,10 @@ package ml.echelon133.graph;
 import java.math.BigDecimal;
 import java.util.*;
 
+/**
+ * Class that allows for finding shortest paths in weighted graphs.
+ * @param <T> type of the value that represents weights of edges in the graph
+ */
 public class ShortestPathSolver<T extends Number & Comparable<T>> {
 
     private class VertexComparator implements Comparator<Vertex<T>> {
@@ -22,6 +26,9 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
     private PriorityQueue<Vertex<T>> workQueue;
     private Map<Vertex<T>, VertexResult<T>> resultMap;
 
+    /**
+     * @param graph graph on which we want to perform shortest path finding algorithm
+     */
     public ShortestPathSolver(Graph<T> graph) {
         this.graph = graph;
         this.visitedVertexes = new HashSet<>();
@@ -29,6 +36,12 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
         this.resultMap = new HashMap<>();
     }
 
+    /**
+     * An internal helper method that creates entries in the resultMap for vertexes
+     * that were processed by the {@link #solveStartingFrom(Vertex)} method.
+     * @param v vertex that might not have an entry in the resultMap
+     * @param startVertex set to {@code true} if we start our shortest path algorithm from this vertex
+     */
     private void putVertexInResultMapIfNotContains(Vertex<T> v, boolean startVertex) {
         if (!resultMap.containsKey(v)) {
             VertexResult<T> vResult = new VertexResult<>(v);
@@ -41,6 +54,12 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
         }
     }
 
+    /**
+     * An internal helper method that updates resultMap {@link VertexResult} state if there is a shorter path between
+     * v1 and v2 vertexes.
+     * @param v1
+     * @param v2
+     */
     private void relax(Vertex<T> v1, Vertex<T> v2) {
         // if v2 was not visited/relaxed yet, it is not present in resultMap
         putVertexInResultMapIfNotContains(v2, false);
@@ -68,6 +87,13 @@ public class ShortestPathSolver<T extends Number & Comparable<T>> {
         }
     }
 
+    /**
+     * Find the shortest path from the vertex given as an argument to every other vertex that is in the graph and is
+     * reachable from the v vertex.
+     * @param v vertex from which we want to calculate shortest paths to every other vertex that is reachable from it
+     * @return map that contains information about paths to every vertex that is reachable from the v vertex
+     * @throws IllegalArgumentException if the vertex v does not belong to the {@link Graph} that was given in the {@link #ShortestPathSolver(Graph)}
+     */
     public Map<Vertex<T>, VertexResult<T>> solveStartingFrom(Vertex<T> v) throws IllegalArgumentException {
         // Algorithm ref: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 

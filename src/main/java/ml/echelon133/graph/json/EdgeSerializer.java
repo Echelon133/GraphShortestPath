@@ -8,6 +8,9 @@ import ml.echelon133.graph.Edge;
 
 import java.io.IOException;
 
+/**
+ * Serializer of {@link Edge} objects.
+ */
 public class EdgeSerializer extends StdSerializer<Edge<?>> {
 
     public EdgeSerializer(JavaType type) {

@@ -10,6 +10,10 @@ import ml.echelon133.graph.VertexResult;
 
 import java.io.IOException;
 
+/**
+ * Serializer of {@link VertexResult} objects. Not intended for standalone use.
+ * It is used by {@link ResultMapSerializer}.
+ */
 public class VertexResultSerializer extends StdSerializer<VertexResult<?>> {
 
     public VertexResultSerializer(JavaType type) {

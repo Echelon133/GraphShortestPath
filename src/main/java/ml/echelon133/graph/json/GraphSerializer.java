@@ -12,6 +12,9 @@ import ml.echelon133.graph.Vertex;
 
 import java.io.IOException;
 
+/**
+ * Serializer of {@link Graph} objects.
+ */
 public class GraphSerializer extends StdSerializer<Graph<?>> {
 
     public GraphSerializer(JavaType type) {
