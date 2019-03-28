@@ -142,6 +142,22 @@ public class GraphDeserializerTest {
     }
 
     @Test
+    public void edgeObjectNegativeEdgeWeightCausesNegativeEdgeWeightException() {
+        String expectedMessage = "Edge weight cannot be negative";
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [{\"source\" : \"v1\", \"destination\" : \"v2\", \"weight\" : -20}]}";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
+
+    @Test
     public void edgeObjectMissingSourceVertexCausesMissingNodeException() {
         String expectedMessage = "Edge object does not contain 'source' field";
         String receivedMessage = "";
