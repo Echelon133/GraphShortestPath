@@ -121,8 +121,12 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
                 throw new EdgeNullVertexException(msg);
             }
 
-            Edge<BigDecimal> e = new Edge<>(sourceVertex, destinationVertex, weight);
-            outputGraph.addEdge(e);
+            try {
+                Edge<BigDecimal> e = new Edge<>(sourceVertex, destinationVertex, weight);
+                outputGraph.addEdge(e);
+            } catch (IllegalArgumentException ex) {
+                throw new NegativeEdgeWeightException(ex.getMessage());
+            }
         }
 
         return outputGraph;
