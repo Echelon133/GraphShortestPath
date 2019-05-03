@@ -23,8 +23,15 @@ import java.util.Map;
  */
 public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
 
+    private Integer maxEdgesCount;
+
     public GraphDeserializer(JavaType valueType) {
         super(valueType);
+    }
+
+    public GraphDeserializer(JavaType valueType, Integer maxEdgesCount) {
+        super(valueType);
+        this.maxEdgesCount = maxEdgesCount;
     }
 
     private void checkIfNodeExists(JsonNode node, String exceptionMessage) throws JsonProcessingException {
@@ -90,6 +97,7 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
         }
 
         // reconstructing edges
+        Integer edgeCounter = 0;
         Iterator<JsonNode> edgesIter = edges.elements();
         while (edgesIter.hasNext()) {
             JsonNode edgeElem = edgesIter.next();
@@ -126,6 +134,17 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
                 outputGraph.addEdge(e);
             } catch (IllegalArgumentException ex) {
                 throw new NegativeEdgeWeightException(ex.getMessage());
+            }
+
+            // check boundaries only if we used the alternative constructor (that initializes maxEdgesCount)
+            if (maxEdgesCount != null) {
+                // if the code reached here, we have successfully added one edge
+                edgeCounter++;
+
+                if (edgeCounter > maxEdgesCount) {
+                    String msg = String.format("Cannot accept graphs that contain more than %d edges", maxEdgesCount);
+                    throw new MaxEdgeCountReachedException(msg);
+                }
             }
         }
 
