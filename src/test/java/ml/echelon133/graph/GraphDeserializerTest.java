@@ -11,13 +11,14 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class GraphDeserializerTest {
 
     private static JavaType graphBigDecimalType;
     private static ObjectMapper mapper;
+    private static Integer maxEdgesCount = 3;
 
     @BeforeAll
     public static void setup() {
@@ -29,7 +30,8 @@ public class GraphDeserializerTest {
         // this type is needed globally (all deserialized graphs type is Graph<BigDecimal>)
         graphBigDecimalType = mapper.getTypeFactory().constructParametricType(Graph.class, BigDecimal.class);
 
-        module.addDeserializer(Graph.class, new GraphDeserializer(graphType));
+        // use the GraphDeserializer constructor that takes max accepted number of edges in a graph
+        module.addDeserializer(Graph.class, new GraphDeserializer(graphType, maxEdgesCount));
 
         mapper.registerModule(module);
     }
@@ -272,6 +274,43 @@ public class GraphDeserializerTest {
         String json = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [" + edgeContent + "]}";
 
         String expectedMessage = String.format("Edge '%s' references a vertex that is not present in 'vertexes'", edgeContent);
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
+
+    @Test
+    public void graphContainingNumberOfEdgesEqualToMaxEdgesCountDeserializesCorrectly() {
+        String edgeContent = "{\"source\":\"v1\",\"destination\":\"v2\",\"weight\":20}," +
+                             "{\"source\":\"v2\",\"destination\":\"v1\",\"weight\":20}," +
+                             "{\"source\":\"v1\",\"destination\":\"v2\",\"weight\":20}";
+        String json = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [" + edgeContent + "]}";
+
+        Graph<BigDecimal> graph = null;
+        try {
+            graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            fail();
+        }
+        assertNotNull(graph);
+    }
+
+    @Test
+    public void graphContainingNumberOfEdgesAboveMaxEdgesCountCausesMaxEdgeCountReachedException() {
+        String receivedMessage = "";
+
+        String edgeContent = "{\"source\":\"v1\",\"destination\":\"v2\",\"weight\":20}," +
+                             "{\"source\":\"v2\",\"destination\":\"v1\",\"weight\":20}," +
+                             "{\"source\":\"v1\",\"destination\":\"v2\",\"weight\":20}," +
+                             "{\"source\":\"v2\",\"destination\":\"v1\",\"weight\":20}";
+        String json = "{\"vertexes\": [\"v1\", \"v2\"], \"edges\": [" + edgeContent + "]}";
+
+        String expectedMessage = String.format("Cannot accept graphs that contain more than %d edges", maxEdgesCount);
 
         try {
             Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
