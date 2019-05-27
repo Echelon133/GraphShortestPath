@@ -320,4 +320,21 @@ public class GraphDeserializerTest {
 
         assertEquals(expectedMessage, receivedMessage);
     }
+
+    @Test
+    public void graphContainingDuplicateVertexesCausesVertexAlreadyInGraphException() {
+        String receivedMessage = "";
+
+        String json = "{\"vertexes\": [\"v1\", \"v1\"], \"edges\": [{\"source\" : \"v1\", \"destination\" : \"v1\", \"weight\" : \"10\"}]}";
+
+        String expectedMessage = "Vertex with name v1 already belongs to the graph";
+
+        try {
+            Graph<BigDecimal> graph = mapper.readValue(json, graphBigDecimalType);
+        } catch (IOException ex) {
+            receivedMessage = ex.getMessage();
+        }
+
+        assertEquals(expectedMessage, receivedMessage);
+    }
 }
