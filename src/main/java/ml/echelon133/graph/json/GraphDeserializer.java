@@ -91,7 +91,13 @@ public class GraphDeserializer extends StdDeserializer<Graph<BigDecimal>> {
 
             Vertex<BigDecimal> v = new Vertex<>(vertexElem.textValue());
 
-            outputGraph.addVertex(v);
+            try {
+                outputGraph.addVertex(v);
+            } catch (IllegalArgumentException ex) {
+                String msg = String.format("Vertex with name %s already belongs to the graph", v.getName());
+                throw new VertexAlreadyInGraphException(msg);
+            }
+
             // add every vertex to the map, this map will make reconstructing edges faster
             vertexHelperMap.put(vertexElem.textValue(), v);
         }
